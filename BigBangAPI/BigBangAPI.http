@@ -1,0 +1,6 @@
+@BigBangAPI_HostAddress = http://localhost:5004
+
+GET {{BigBangAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
