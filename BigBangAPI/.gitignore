@@ -1,0 +1,15 @@
+# Ambiente
+.env
+
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# Configuração local
+appsettings.Development.json
