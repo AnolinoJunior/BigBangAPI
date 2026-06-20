@@ -4,7 +4,7 @@ namespace BigBangAPI.Validations
 {
     public class PrimeiraLetraMaiuscula : ValidationAttribute
     {
-        protected override ValidationResult IsValid(
+        protected override ValidationResult? IsValid(
             object? value,
             ValidationContext validationContext)
         {
