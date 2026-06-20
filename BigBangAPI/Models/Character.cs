@@ -6,7 +6,6 @@ namespace BigBangAPI.Models
     public class Character
     {
         [Key]
-        [Required]
         public int Id { get; set; }
         [Required]
         [StringLength(45, ErrorMessage = "Name cannot be longer than 45 characters.")]
