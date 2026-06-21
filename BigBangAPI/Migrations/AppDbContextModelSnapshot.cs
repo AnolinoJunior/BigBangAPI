@@ -32,35 +32,53 @@ namespace BigBangAPI.Migrations
 
                     b.Property<string>("Actor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<string>("IQ")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IQ")
+                        .HasColumnType("int");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("Occupation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("University")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
 
                     b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("BigBangAPI.Models.CharacterEpisode", b =>
+                {
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EpisodeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "EpisodeId");
+
+                    b.HasIndex("EpisodeId");
+
+                    b.ToTable("CharacterEpisodes");
                 });
 
             modelBuilder.Entity("BigBangAPI.Models.Episode", b =>
@@ -82,7 +100,8 @@ namespace BigBangAPI.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.HasKey("Id");
 
@@ -99,7 +118,8 @@ namespace BigBangAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.HasKey("Id");
 
@@ -115,6 +135,35 @@ namespace BigBangAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("BigBangAPI.Models.CharacterEpisode", b =>
+                {
+                    b.HasOne("BigBangAPI.Models.Character", "Character")
+                        .WithMany("CharacterEpisodes")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BigBangAPI.Models.Episode", "Episode")
+                        .WithMany("CharacterEpisodes")
+                        .HasForeignKey("EpisodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Episode");
+                });
+
+            modelBuilder.Entity("BigBangAPI.Models.Character", b =>
+                {
+                    b.Navigation("CharacterEpisodes");
+                });
+
+            modelBuilder.Entity("BigBangAPI.Models.Episode", b =>
+                {
+                    b.Navigation("CharacterEpisodes");
                 });
 
             modelBuilder.Entity("BigBangAPI.Models.Location", b =>

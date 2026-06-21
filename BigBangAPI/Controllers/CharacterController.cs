@@ -19,7 +19,7 @@ namespace BigBangAPI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(Character character)
+        public async Task<IActionResult> Create([FromBody]Character character)
         {
             if (await _context.Characters.AnyAsync(c => c.Name == character.Name))
             {
@@ -37,18 +37,26 @@ namespace BigBangAPI.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var characters = await _context.Characters
-                .AsNoTracking()
-                .Include(c => c.Location)
-                .Skip(10)
-                .Take(10)
-                .ToListAsync();
+      [HttpGet]
+    public async Task<IActionResult> Get(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
+    {
+        if (page < 1)
+         return BadRequest("Page must be greater than 0.");
 
-            return Ok(characters);
-        }
+        if (pageSize < 1 || pageSize > 50)
+            return BadRequest("PageSize must be between 1 and 50.");
+
+        var characters = await _context.Characters
+         .AsNoTracking()
+            .Include(c => c.Location)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return Ok(characters);
+    }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -81,7 +89,7 @@ namespace BigBangAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Character updatedCharacter)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Character updatedCharacter)
         {
             if (id != updatedCharacter.Id)
                 return BadRequest();
@@ -119,20 +127,35 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("dto")]
-        public ActionResult<IEnumerable<CharacterDTO>> GetCharacters()
+            public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacters([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var character = _context.Characters
-                .Select(f => new CharacterDTO
+            if (pageSize < 1 || pageSize > 50)
+            {
+                return BadRequest("PageSize must be between 1 and 50.");
+            }
 
-                {
-                    Id = f.Id,
-                    Name = f.Name,
-                    Actor = f.Actor,
-                    Occupation = f.Occupation
-                })
-                .ToList();
-            return Ok(character);
+            var characters = await _context.Characters
+            .Select(f => new CharacterDTO
+        {
+            Id = f.Id,
+            Name = f.Name,
+            Actor = f.Actor,
+            Occupation = f.Occupation
+        })
+        .ToListAsync();
+
+            return Ok(characters);
         }
+        [HttpGet("{id:int:min(1)}/episodes")]
+        public async Task<IActionResult> GetCharacterEpisodes(int id)
+    {
+        var episodes = await _context.CharacterEpisodes
+            .Where(ce => ce.CharacterId == id)
+            .Select(ce => ce.Episode)
+            .ToListAsync();
+
+        return Ok(episodes);
+}
 
     }
 }

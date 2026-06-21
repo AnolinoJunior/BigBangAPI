@@ -5,11 +5,18 @@ namespace BigBangAPI.Context
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        { }
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Character> Characters { get; set; }
+
         public DbSet<Episode> Episodes { get; set; }
+
         public DbSet<Location> Locations { get; set; }
+
+        public DbSet<CharacterEpisode> CharacterEpisodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
