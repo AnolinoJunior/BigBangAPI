@@ -13,3 +13,7 @@ obj/
 
 # Configuração local
 appsettings.Development.json
+appsettings.Production.json
+# Arquivos pessoais do Visual Studio
+*.user
+*.suo
