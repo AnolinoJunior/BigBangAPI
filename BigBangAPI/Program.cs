@@ -3,8 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString =
-    builder.Configuration.GetConnectionString("DefaultConnection")!;
+var configuration = builder.Configuration;
+
+// Lê as configurações do appsettings.json
+var server = configuration["SqlServer:Server"];
+var database = configuration["SqlServer:Database"];
+var trustedConnection = configuration["SqlServer:TrustedConnection"];
+var trustServerCertificate = configuration["SqlServer:TrustServerCertificate"];
+
+// Monta a Connection String
+var connectionString =
+    $"Server={server};Database={database};Trusted_Connection={trustedConnection};TrustServerCertificate={trustServerCertificate};";
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -25,6 +34,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
 
 app.MapControllers();
