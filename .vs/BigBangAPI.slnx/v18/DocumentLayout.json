@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\appsettings.production.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\appsettings.production.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
+              "RelativeDocumentMoniker": "BigBangAPI\\Program.cs",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
+              "RelativeToolTip": "BigBangAPI\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAQwCEAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-25T02:05:40.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "BigBangAPI\\appsettings.Development.json",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Development.json",
+              "RelativeToolTip": "BigBangAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-25T01:53:52.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.Production.json",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Production.json",
+              "RelativeDocumentMoniker": "BigBangAPI\\appsettings.Production.json",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Production.json",
+              "RelativeToolTip": "BigBangAPI\\appsettings.Production.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-21T23:03:40.232Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
