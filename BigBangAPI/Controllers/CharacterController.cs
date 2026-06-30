@@ -35,9 +35,14 @@ namespace BigBangAPI.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
         }
+        [HttpGet("erro")]
+        public IActionResult Erro()
+        {
+            throw new Exception("Erro de teste do middleware");
+        }
 
 
-      [HttpGet]
+        [HttpGet]
     public async Task<IActionResult> Get(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10)

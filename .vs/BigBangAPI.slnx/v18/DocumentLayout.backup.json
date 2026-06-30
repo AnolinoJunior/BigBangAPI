@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\controllers\\charactercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\controllers\\charactercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\extensions\\apiexceptionmiddlewareextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\extensions\\apiexceptionmiddlewareextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\models\\errordetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\models\\errordetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|solutionrelative:bigbangapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3B4F85A6-BD25-E841-BA74-6ED65DE6134A}|BigBangAPI\\BigBangAPI.csproj|c:\\repositorios\\csharp\\projeto-bigbangapi\\bigbangapi\\bigbangapi\\appsettings.production.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -22,46 +34,83 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\.gitignore",
-              "RelativeDocumentMoniker": "BigBangAPI\\.gitignore",
-              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\.gitignore",
-              "RelativeToolTip": "BigBangAPI\\.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2026-06-23T01:44:57.474Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
-              "RelativeDocumentMoniker": "BigBangAPI\\Program.cs",
-              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
-              "RelativeToolTip": "BigBangAPI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAKAAAAAAAAAA==",
+              "Title": "ApiExceptionMiddlewareExtensions.cs",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "RelativeDocumentMoniker": "BigBangAPI\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "RelativeToolTip": "BigBangAPI\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-23T01:34:42.904Z",
+              "WhenOpened": "2026-06-30T01:32:56.093Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ErrorDetails.cs",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Models\\ErrorDetails.cs",
+              "RelativeDocumentMoniker": "BigBangAPI\\Models\\ErrorDetails.cs",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Models\\ErrorDetails.cs*",
+              "RelativeToolTip": "BigBangAPI\\Models\\ErrorDetails.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAowA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T01:32:37.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CharacterController.cs",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Controllers\\CharacterController.cs",
+              "RelativeDocumentMoniker": "BigBangAPI\\Controllers\\CharacterController.cs",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Controllers\\CharacterController.cs",
+              "RelativeToolTip": "BigBangAPI\\Controllers\\CharacterController.cs",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAmwKEAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T01:27:22.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
+              "RelativeDocumentMoniker": "BigBangAPI\\Program.cs",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\Program.cs",
+              "RelativeToolTip": "BigBangAPI\\Program.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAuwCwAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-25T02:05:40.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "BigBangAPI\\appsettings.Development.json",
+              "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Development.json",
+              "RelativeToolTip": "BigBangAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-25T01:53:52.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "appsettings.Production.json",
               "DocumentMoniker": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Production.json",
               "RelativeDocumentMoniker": "BigBangAPI\\appsettings.Production.json",
               "ToolTip": "C:\\Repositorios\\Csharp\\Projeto-BigbangAPI\\BigBangAPI\\BigBangAPI\\appsettings.Production.json",
               "RelativeToolTip": "BigBangAPI\\appsettings.Production.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-06-21T23:03:40.232Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-21T23:03:40.232Z"
             }
           ]
         }
