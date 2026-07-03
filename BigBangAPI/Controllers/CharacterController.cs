@@ -1,5 +1,6 @@
 ﻿using BigBangAPI.Context;
 using BigBangAPI.DTO;
+using BigBangAPI.Filters;
 using BigBangAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,33 +36,28 @@ namespace BigBangAPI.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
         }
-        [HttpGet("erro")]
-        public IActionResult Erro()
-        {
-            throw new Exception("Erro de teste do middleware");
-        }
+        
+       [HttpGet]
+[ServiceFilter(typeof(ApiLoggingFilter))]
+public async Task<IActionResult> Get(
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
+{
+    if (page < 1)
+        return BadRequest("Page must be greater than 0.");
 
+    if (pageSize < 1 || pageSize > 50)
+        return BadRequest("PageSize must be between 1 and 50.");
 
-        [HttpGet]
-    public async Task<IActionResult> Get(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 10)
-    {
-        if (page < 1)
-         return BadRequest("Page must be greater than 0.");
+    var characters = await _context.Characters
+        .AsNoTracking()
+        .Include(c => c.Location)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
 
-        if (pageSize < 1 || pageSize > 50)
-            return BadRequest("PageSize must be between 1 and 50.");
-
-        var characters = await _context.Characters
-         .AsNoTracking()
-            .Include(c => c.Location)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-
-        return Ok(characters);
-    }
+    return Ok(characters);
+}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

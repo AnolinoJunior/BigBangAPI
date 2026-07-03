@@ -1,6 +1,7 @@
     using BigBangAPI.Context;
     using BigBangAPI.Extensions;
-    using Microsoft.EntityFrameworkCore;
+using BigBangAPI.Filters;
+using Microsoft.EntityFrameworkCore;
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@
             options.JsonSerializerOptions.ReferenceHandler =
                 System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
+
+    builder.Services.AddScoped<ApiLoggingFilter>();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
