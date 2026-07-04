@@ -59,30 +59,22 @@ Em breve.
 - Entity Framework Core
 - SQL Server
 - Swagger / OpenAPI
+- Git
+- GitHub
+- Somee Hosting
+---
+## 🧩 Conceitos Aplicados
+- REST API
 - Dependency Injection
 - Middleware
 - Action Filters
 - Logging (ILogger)
 - Custom Logger Provider
-- LINQ
 - DTO Pattern
-- REST API
-- Git
-- GitHub
-- Somee Hosting
----
-## 🧩 Recursos Implementados
-
-- Injeção de Dependência (Dependency Injection)
-- Middleware personalizado para tratamento global de exceções
-- Action Filter personalizado
-- Logger personalizado utilizando ILogger
-- Logger Provider personalizado
-- Paginação utilizando Skip() e Take()
-- Carregamento de relacionamentos com Include()
-- Projeções utilizando DTO
-- Serialização JSON configurada para evitar ciclos
-- Tratamento de erros HTTP
+- LINQ
+- Paginação
+- Relacionamentos (1:N e N:N)
+- Tratamento Global de Exceções
 ## 📂 Estrutura do Projeto
 
 ```text
@@ -162,16 +154,16 @@ Este projeto foi criado para:
 ---
 
 ## 🚀 Próximas Melhorias
-
-- Cache
+- JWT Authentication
+- Refresh Token
+- Versionamento da API
+- FluentValidation
 - Docker
-- Rate Limiting
+- Cache
 - Testes Unitários
-- GraphQL
-- Autenticação JWT
-
+- Health Checks
+- CI/CD com GitHub Actions
 ---
-
 ## 👨‍💻 Autor
 
 Anolino Alves dos Santos Junior
