@@ -1,9 +1,16 @@
+![.NET](https://img.shields.io/badge/.NET-8-purple)
+
+![C#](https://img.shields.io/badge/C%23-ASP.NET%20Core-blue)
+
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
+
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-green)
+
 # 🚀 The Big Bang Theory API
 
-Uma API REST pública inspirada na Rick and Morty API, criada para fornecer informações estruturadas sobre o universo da série The Big Bang Theory.
+Uma API REST desenvolvida em ASP.NET Core (.NET 8), inspirada na Rick and Morty API, com o objetivo de aplicar conceitos modernos de desenvolvimento backend.
 
-O projeto disponibiliza dados sobre personagens, episódios, locais e relacionamentos da série através de endpoints simples e bem documentados.
-
+Além do CRUD de personagens, episódios e locais, o projeto implementa recursos como Middleware, Action Filters, Logging Personalizado, Entity Framework Core, DTOs, Paginação e Tratamento Global de Exceções.
 ---
 
 ## 🌎 Demonstração
