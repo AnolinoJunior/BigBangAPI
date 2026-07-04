@@ -27,198 +27,74 @@ Em breve.
 
 ## ✨ Funcionalidades
 
-- Listagem de personagens
-- Consulta de personagem por ID
-- Listagem de episódios
-- Consulta de episódio por ID
-- Listagem de locais
-- Busca por nome
+- CRUD completo de Personagens
+- CRUD completo de Episódios
+- CRUD completo de Locais
+- Consulta por ID
 - Paginação
-- Relacionamento Personagem ↔ Episódio
-- Versionamento da API
-- Swagger/OpenAPI
-- Seed automático do banco
-
----
-
+- DTOs para projeção de dados
+- Relacionamento One-to-Many
+- Relacionamento Many-to-Many
+- Restrições de rotas
+- Middleware global para tratamento de exceções
+- Filtros personalizados (Action Filters)
+- Sistema de Logging personalizado
+- Logging utilizando ILogger
+- Provider de Logging customizado
+- Logs gravados automaticamente em arquivo
+- Swagger / OpenAPI
+- Entity Framework Core
+- SQL Server
+- 
 ## 🛠️ Tecnologias
 
-- ASP.NET Core Web API
-- .NET 8
+- ASP.NET Core Web API (.NET 8)
+- C#
 - Entity Framework Core
-- MySQL
+- SQL Server
 - Swagger / OpenAPI
-- SOMEE Hosting
-- Git & GitHub
-
+- Dependency Injection
+- Middleware
+- Action Filters
+- Logging (ILogger)
+- Custom Logger Provider
+- LINQ
+- DTO Pattern
+- REST API
+- Git
+- GitHub
+- Somee Hosting
 ---
+## 🧩 Recursos Implementados
 
+- Injeção de Dependência (Dependency Injection)
+- Middleware personalizado para tratamento global de exceções
+- Action Filter personalizado
+- Logger personalizado utilizando ILogger
+- Logger Provider personalizado
+- Paginação utilizando Skip() e Take()
+- Carregamento de relacionamentos com Include()
+- Projeções utilizando DTO
+- Serialização JSON configurada para evitar ciclos
+- Tratamento de erros HTTP
+- 
 ## 📂 Estrutura do Projeto
 
 ```text
 BigBangAPI
 │
 ├── Controllers
-│   ├── CharactersController
-│   ├── EpisodesController
-│   └── LocationsController
-│
-├── DTOs
-│
-├── Models
-│   ├── Character
-│   ├── Episode
-│   ├── Location
-│   └── CharacterEpisode
-│
-├── Data
-│   ├── AppDbContext
-│   └── SeedData
-│
-├── Repositories
-│
-├── Services
-│
+├── Context
+├── DTO
+├── Extensions
+├── Filters
+├── Logging
+├── Logs
 ├── Migrations
-│
+├── Models
+├── Validations
 ├── Program.cs
 └── appsettings.json
-```
-
----
-
-## 🗄️ Modelo de Dados
-
-### Character
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Name | string |
-| Status | string |
-| Gender | string |
-| Occupation | string |
-| ImageUrl | string |
-
-### Episode
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Title | string |
-| SeasonNumber | int |
-| EpisodeNumber | int |
-| AirDate | DateTime |
-
-### Location
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Name | string |
-| Type | string |
-| Description | string |
-
----
-
-## 🔗 Relacionamentos
-
-### Character ↔ Episode
-
-Um personagem pode aparecer em vários episódios.
-
-Um episódio pode conter vários personagens.
-
-Relacionamento Many-to-Many através da tabela:
-
-```text
-CharacterEpisode
-├── CharacterId
-└── EpisodeId
-```
-
----
-
-## 📡 Endpoints
-
-### Characters
-
-#### Listar personagens
-
-```http
-GET /api/v1/characters
-```
-
-#### Buscar personagem por ID
-
-```http
-GET /api/v1/characters/1
-```
-
-#### Buscar por nome
-
-```http
-GET /api/v1/characters?name=sheldon
-```
-
-#### Paginação
-
-```http
-GET /api/v1/characters?page=1&pageSize=20
-```
-
----
-
-### Episodes
-
-#### Listar episódios
-
-```http
-GET /api/v1/episodes
-```
-
-#### Buscar episódio por ID
-
-```http
-GET /api/v1/episodes/1
-```
-
----
-
-### Locations
-
-#### Listar locais
-
-```http
-GET /api/v1/locations
-```
-
-#### Buscar local por ID
-
-```http
-GET /api/v1/locations/1
-```
-
----
-
-## 📦 Exemplo de Resposta
-
-```json
-{
-  "id": 1,
-  "name": "Sheldon Cooper",
-  "occupation": "Theoretical Physicist",
-  "episodes": [
-    {
-      "id": 1,
-      "title": "Pilot"
-    },
-    {
-      "id": 2,
-      "title": "The Big Bran Hypothesis"
-    }
-  ]
-}
 ```
 
 ---
