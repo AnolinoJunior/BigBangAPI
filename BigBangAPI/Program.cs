@@ -1,6 +1,7 @@
     using BigBangAPI.Context;
     using BigBangAPI.Extensions;
 using BigBangAPI.Filters;
+using BigBangAPI.Logging;
 using Microsoft.EntityFrameworkCore;
 
     var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,12 @@ using Microsoft.EntityFrameworkCore;
             options.JsonSerializerOptions.ReferenceHandler =
                 System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
+
+    builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
+    {
+        LogLevel = LogLevel.Warning,
+        EventId = 0
+    }));
 
     builder.Services.AddScoped<ApiLoggingFilter>();
 
