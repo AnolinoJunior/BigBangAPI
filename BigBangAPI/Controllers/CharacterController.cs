@@ -4,6 +4,7 @@ using BigBangAPI.Filters;
 using BigBangAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BigBangAPI.Controllers
 {
@@ -12,16 +13,20 @@ namespace BigBangAPI.Controllers
     public class CharacterController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<CharacterController> _logger;
 
-        public CharacterController(AppDbContext context)
+        public CharacterController(AppDbContext context, ILogger<CharacterController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]Character character)
         {
+            _logger.LogInformation("Creating a new character: {CharacterName}", character.Name);
+
             if (await _context.Characters.AnyAsync(c => c.Name == character.Name))
             {
                 return BadRequest("Character already exists");
@@ -116,6 +121,9 @@ public async Task<IActionResult> Get(
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+
+            _logger.LogInformation("Deleting character with ID: {CharacterId}", id);
+
             var character = await _context.Characters.FindAsync(id);
 
             if (character == null)
