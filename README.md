@@ -45,7 +45,6 @@ Em breve.
 - Swagger / OpenAPI
 - Entity Framework Core
 - SQL Server
-- 
 ## 🛠️ Tecnologias
 
 - ASP.NET Core Web API (.NET 8)
@@ -77,7 +76,6 @@ Em breve.
 - Projeções utilizando DTO
 - Serialização JSON configurada para evitar ciclos
 - Tratamento de erros HTTP
-- 
 ## 📂 Estrutura do Projeto
 
 ```text
