@@ -1,4 +1,5 @@
-    using BigBangAPI.Context;
+using System.Text.Json.Serialization;
+using BigBangAPI.Context;
     using BigBangAPI.Extensions;
 using BigBangAPI.Filters;
 using BigBangAPI.Logging;
@@ -18,12 +19,26 @@ using Microsoft.EntityFrameworkCore;
     var connectionString =
         $"Server={server};Database={database};Trusted_Connection={trustedConnection};TrustServerCertificate={trustServerCertificate};";
 
-    builder.Services.AddControllers()
-        .AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler =
-                System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-        });
+    builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add(typeof(ApiExceptionFilter));
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+           ReferenceHandler.IgnoreCycles;
+    }); 
+
+
+    builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add(typeof(ApiExceptionFilter));
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+           ReferenceHandler.IgnoreCycles;
+    }); 
 
     builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
     {

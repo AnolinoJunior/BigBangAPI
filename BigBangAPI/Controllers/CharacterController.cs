@@ -64,34 +64,24 @@ public async Task<IActionResult> Get(
     return Ok(characters);
 }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+      [HttpGet("{id}")]
+public async Task<IActionResult> GetById(int id)
+{
+    var character = await _context.Characters
+        .Include(c => c.Location)
+        .FirstOrDefaultAsync(c => c.Id == id);
+
+    if (character == null)
+    {
+        return NotFound(new
         {
-            try
-            {
-                var character = await _context.Characters
-                    .Include(c => c.Location)
-                    .FirstOrDefaultAsync(c => c.Id == id);
+            Message = $"Character with ID {id} was not found."
+        });
+    }
 
-                if (character == null)
-                {
-                    return NotFound(new
-                    {
-                        Message = $"Character with ID {id} was not found."
-                    });
-                }
-
-                return Ok(character);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Message = "An internal server error occurred.",
-                    Error = ex.Message
-                });
-            }
-        }
+    return Ok(character);
+}
+        
 
 
         [HttpPut("{id}")]
