@@ -1,9 +1,16 @@
+![.NET](https://img.shields.io/badge/.NET-8-purple)
+
+![C#](https://img.shields.io/badge/C%23-ASP.NET%20Core-blue)
+
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
+
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-green)
+
 # 🚀 The Big Bang Theory API
 
-Uma API REST pública inspirada na Rick and Morty API, criada para fornecer informações estruturadas sobre o universo da série The Big Bang Theory.
+Uma API REST desenvolvida em ASP.NET Core (.NET 8), inspirada na Rick and Morty API, com o objetivo de aplicar conceitos modernos de desenvolvimento backend.
 
-O projeto disponibiliza dados sobre personagens, episódios, locais e relacionamentos da série através de endpoints simples e bem documentados.
-
+Além do CRUD de personagens, episódios e locais, o projeto implementa recursos como Middleware, Action Filters, Logging Personalizado, Entity Framework Core, DTOs, Paginação e Tratamento Global de Exceções.
 ---
 
 ## 🌎 Demonstração
@@ -27,198 +34,64 @@ Em breve.
 
 ## ✨ Funcionalidades
 
-- Listagem de personagens
-- Consulta de personagem por ID
-- Listagem de episódios
-- Consulta de episódio por ID
-- Listagem de locais
-- Busca por nome
+- CRUD completo de Personagens
+- CRUD completo de Episódios
+- CRUD completo de Locais
+- Consulta por ID
 - Paginação
-- Relacionamento Personagem ↔ Episódio
-- Versionamento da API
-- Swagger/OpenAPI
-- Seed automático do banco
-
----
-
+- DTOs para projeção de dados
+- Relacionamento One-to-Many
+- Relacionamento Many-to-Many
+- Restrições de rotas
+- Middleware global para tratamento de exceções
+- Filtros personalizados (Action Filters)
+- Sistema de Logging personalizado
+- Logging utilizando ILogger
+- Provider de Logging customizado
+- Logs gravados automaticamente em arquivo
+- Swagger / OpenAPI
+- Entity Framework Core
+- SQL Server
 ## 🛠️ Tecnologias
 
-- ASP.NET Core Web API
-- .NET 8
+- ASP.NET Core Web API (.NET 8)
+- C#
 - Entity Framework Core
-- MySQL
+- SQL Server
 - Swagger / OpenAPI
-- SOMEE Hosting
-- Git & GitHub
-
+- Git
+- GitHub
+- Somee Hosting
 ---
-
+## 🧩 Conceitos Aplicados
+- REST API
+- Dependency Injection
+- Middleware
+- Action Filters
+- Logging (ILogger)
+- Custom Logger Provider
+- DTO Pattern
+- LINQ
+- Paginação
+- Relacionamentos (1:N e N:N)
+- Tratamento Global de Exceções
 ## 📂 Estrutura do Projeto
 
 ```text
 BigBangAPI
 │
 ├── Controllers
-│   ├── CharactersController
-│   ├── EpisodesController
-│   └── LocationsController
-│
-├── DTOs
-│
-├── Models
-│   ├── Character
-│   ├── Episode
-│   ├── Location
-│   └── CharacterEpisode
-│
-├── Data
-│   ├── AppDbContext
-│   └── SeedData
-│
-├── Repositories
-│
-├── Services
-│
+├── Context
+├── DTO
+├── Extensions
+├── Filters
+├── Logging
+├── Logs
 ├── Migrations
-│
+├── Models
+├── Validations
 ├── Program.cs
 └── appsettings.json
-```
-
----
-
-## 🗄️ Modelo de Dados
-
-### Character
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Name | string |
-| Status | string |
-| Gender | string |
-| Occupation | string |
-| ImageUrl | string |
-
-### Episode
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Title | string |
-| SeasonNumber | int |
-| EpisodeNumber | int |
-| AirDate | DateTime |
-
-### Location
-
-| Campo | Tipo |
-|---------|---------|
-| Id | int |
-| Name | string |
-| Type | string |
-| Description | string |
-
----
-
-## 🔗 Relacionamentos
-
-### Character ↔ Episode
-
-Um personagem pode aparecer em vários episódios.
-
-Um episódio pode conter vários personagens.
-
-Relacionamento Many-to-Many através da tabela:
-
-```text
-CharacterEpisode
-├── CharacterId
-└── EpisodeId
-```
-
----
-
-## 📡 Endpoints
-
-### Characters
-
-#### Listar personagens
-
-```http
-GET /api/v1/characters
-```
-
-#### Buscar personagem por ID
-
-```http
-GET /api/v1/characters/1
-```
-
-#### Buscar por nome
-
-```http
-GET /api/v1/characters?name=sheldon
-```
-
-#### Paginação
-
-```http
-GET /api/v1/characters?page=1&pageSize=20
-```
-
----
-
-### Episodes
-
-#### Listar episódios
-
-```http
-GET /api/v1/episodes
-```
-
-#### Buscar episódio por ID
-
-```http
-GET /api/v1/episodes/1
-```
-
----
-
-### Locations
-
-#### Listar locais
-
-```http
-GET /api/v1/locations
-```
-
-#### Buscar local por ID
-
-```http
-GET /api/v1/locations/1
-```
-
----
-
-## 📦 Exemplo de Resposta
-
-```json
-{
-  "id": 1,
-  "name": "Sheldon Cooper",
-  "occupation": "Theoretical Physicist",
-  "episodes": [
-    {
-      "id": 1,
-      "title": "Pilot"
-    },
-    {
-      "id": 2,
-      "title": "The Big Bran Hypothesis"
-    }
-  ]
-}
 ```
 
 ---
@@ -281,16 +154,16 @@ Este projeto foi criado para:
 ---
 
 ## 🚀 Próximas Melhorias
-
-- Cache
+- JWT Authentication
+- Refresh Token
+- Versionamento da API
+- FluentValidation
 - Docker
-- Rate Limiting
+- Cache
 - Testes Unitários
-- GraphQL
-- Autenticação JWT
-
+- Health Checks
+- CI/CD com GitHub Actions
 ---
-
 ## 👨‍💻 Autor
 
 Anolino Alves dos Santos Junior
