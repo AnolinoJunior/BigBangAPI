@@ -47,6 +47,7 @@ Em breve.
 - Filtros personalizados (Action Filters)
 - Sistema de Logging personalizado
 - Logging utilizando ILogger
+- Repository Pattern
 - Provider de Logging customizado
 - Logs gravados automaticamente em arquivo
 - Swagger / OpenAPI
@@ -61,20 +62,24 @@ Em breve.
 - Swagger / OpenAPI
 - Git
 - GitHub
+- Repository Pattern
+- Dependency Injection
 - Somee Hosting
 ---
 ## 🧩 Conceitos Aplicados
 - REST API
+- Repository Pattern
 - Dependency Injection
 - Middleware
 - Action Filters
+- Exception Filters
 - Logging (ILogger)
 - Custom Logger Provider
 - DTO Pattern
 - LINQ
 - Paginação
 - Relacionamentos (1:N e N:N)
-- Tratamento Global de Exceções
+- Tratamento Global de Exceçõe
 ## 📂 Estrutura do Projeto
 
 ```text
@@ -86,10 +91,13 @@ BigBangAPI
 ├── Extensions
 ├── Filters
 ├── Logging
+├── Models
+├── Repositories
+│   ├── ICharacterRepository
+│   └── CharacterRepository
+├── Validations
 ├── Logs
 ├── Migrations
-├── Models
-├── Validations
 ├── Program.cs
 └── appsettings.json
 ```
