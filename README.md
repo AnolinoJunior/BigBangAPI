@@ -53,6 +53,23 @@ Em breve.
 - Swagger / OpenAPI
 - Entity Framework Core
 - SQL Server
+- ## 🏗️ Arquitetura da Aplicação
+
+```text
+HTTP Request
+      │
+      ▼
+Controller
+      │
+      ▼
+Repository
+      │
+      ▼
+Entity Framework Core
+      │
+      ▼
+SQL Server
+```
 ## 🛠️ Tecnologias
 
 - ASP.NET Core Web API (.NET 8)
