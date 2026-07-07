@@ -1,70 +1,71 @@
 using System.Text.Json.Serialization;
 using BigBangAPI.Context;
-    using BigBangAPI.Extensions;
+using BigBangAPI.Extensions;
 using BigBangAPI.Filters;
 using BigBangAPI.Logging;
+using BigBangAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-    var configuration = builder.Configuration;
+var configuration = builder.Configuration;
 
-    // Lê as configurações do appsettings.json
-    var server = configuration["SqlServer:Server"];
-    var database = configuration["SqlServer:Database"];
-    var trustedConnection = configuration["SqlServer:TrustedConnection"];
-    var trustServerCertificate = configuration["SqlServer:TrustServerCertificate"];
+// Lê as configurações do appsettings.json
+var server = configuration["SqlServer:Server"];
+var database = configuration["SqlServer:Database"];
+var trustedConnection = configuration["SqlServer:TrustedConnection"];
+var trustServerCertificate = configuration["SqlServer:TrustServerCertificate"];
 
-    // Monta a Connection String
-    var connectionString =
-        $"Server={server};Database={database};Trusted_Connection={trustedConnection};TrustServerCertificate={trustServerCertificate};";
+// Monta a Connection String
+var connectionString =
+    $"Server={server};Database={database};Trusted_Connection={trustedConnection};TrustServerCertificate={trustServerCertificate};";
 
-    builder.Services.AddControllers(options =>
-    {
-        options.Filters.Add(typeof(ApiExceptionFilter));
-    })
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler =
-           ReferenceHandler.IgnoreCycles;
-    }); 
+// Controllers + Filtros + JSON
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ApiExceptionFilter>();
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler =
+        ReferenceHandler.IgnoreCycles;
+});
 
+// Logging customizado
+builder.Logging.AddProvider(
+    new CustomLoggerProvider(
+        new CustomLoggerProviderConfiguration
+        {
+            LogLevel = LogLevel.Warning,
+            EventId = 0
+        }));
 
-    builder.Services.AddControllers(options =>
-    {
-        options.Filters.Add(typeof(ApiExceptionFilter));
-    })
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler =
-           ReferenceHandler.IgnoreCycles;
-    }); 
+// Dependency Injection
+builder.Services.AddScoped<ApiLoggingFilter>();
+builder.Services.AddScoped<ApiExceptionFilter>();
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 
-    builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
-    {
-        LogLevel = LogLevel.Warning,
-        EventId = 0
-    }));
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-    builder.Services.AddScoped<ApiLoggingFilter>();
+// Entity Framework
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+var app = builder.Build();
 
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(connectionString));
+// Middleware global de exceções
+app.ConfigureExceptionHandler();
 
-    var app = builder.Build();
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 
-    app.ConfigureExceptionHandler();
+app.UseHttpsRedirection();
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseAuthorization();
 
-    app.UseHttpsRedirection();
+app.MapControllers();
 
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
+app.Run();

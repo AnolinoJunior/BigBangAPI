@@ -1,78 +1,111 @@
-﻿using BigBangAPI.Context;
-using BigBangAPI.DTO;
-using BigBangAPI.Filters;
-using BigBangAPI.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿    using BigBangAPI.DTO;
+    using BigBangAPI.Filters;
+    using BigBangAPI.Models;
+    using BigBangAPI.Repositories;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
-namespace BigBangAPI.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CharacterController : ControllerBase
+    namespace BigBangAPI.Controllers
     {
-        private readonly AppDbContext _context;
-        private readonly ILogger<CharacterController> _logger;
+        [ApiController]
+        [Route("api/[controller]")]
+        public class CharacterController : ControllerBase
+        {   
+            private readonly ICharacterRepository _repository;
+            private readonly ILogger<CharacterController> _logger;
 
-        public CharacterController(AppDbContext context, ILogger<CharacterController> logger)
-        {
-            _context = context;
-            _logger = logger;
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody]Character character)
-        {
-            _logger.LogInformation("Creating a new character: {CharacterName}", character.Name);
-
-            if (await _context.Characters.AnyAsync(c => c.Name == character.Name))
+            public CharacterController(ICharacterRepository repository, ILogger<CharacterController> logger)
             {
-                return BadRequest("Character already exists");
+                _repository = repository;
+                _logger = logger;
             }
 
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
-
-            await _context.Entry(character)
-        .Reference(c => c.Location)
-        .LoadAsync();
-
-            return CreatedAtAction(nameof(GetById), new { id = character.Id }, character);
-        }
-        
-       [HttpGet]
-[ServiceFilter(typeof(ApiLoggingFilter))]
-public async Task<IActionResult> Get(
-    [FromQuery] int page = 1,
-    [FromQuery] int pageSize = 10)
+ [HttpPost]
+public ActionResult<Character> Create([FromBody] Character character)
 {
-    if (page < 1)
-        return BadRequest("Page must be greater than 0.");
+    if (character is null)
+    {
+        _logger.LogWarning("Create request received with a null character.");
 
-    if (pageSize < 1 || pageSize > 50)
-        return BadRequest("PageSize must be between 1 and 50.");
+        return BadRequest();
+    }
 
-    var characters = await _context.Characters
-        .AsNoTracking()
-        .Include(c => c.Location)
-        .Skip((page - 1) * pageSize)
-        .Take(pageSize)
-        .ToListAsync();
+    _logger.LogInformation(
+        "Creating a new character: {CharacterName}",
+        character.Name);
 
-    return Ok(characters);
+    var novoCharacter = _repository.Create(character);
+
+    return CreatedAtAction(
+        nameof(GetById),
+        new { id = novoCharacter.Id },
+        novoCharacter);
+}
+    [HttpGet]
+    [ServiceFilter(typeof(ApiLoggingFilter))]
+    public ActionResult <IEnumerable<Character>> Get()
+    {
+        var characters = _repository.GetCharacters();
+
+        return Ok(characters);
+    }
+
+        [HttpGet("{id}")]
+    public ActionResult<Character> GetById(int id)
+    {
+        var character = _repository.GetCharacter(id);
+
+        if (character == null)
+        {
+            return NotFound(new
+            {
+                Message = $"Character with ID {id} was not found."
+            });
+        }
+
+        return Ok(character);
+    }
+            
+   [HttpPut("{id}")]
+public ActionResult<Character> Update(int id, Character character)
+{
+    if (id != character.Id)
+    {
+        _logger.LogWarning(
+            "Update request received with mismatched ID: {CharacterId} and character ID: {CharacterObjectId}",
+            id, character.Id);
+
+        return BadRequest();
+    }
+
+    var updatedCharacter = _repository.Update(character);
+
+    if (updatedCharacter == null)
+    {
+        return NotFound(new
+        {
+            Message = $"Character with ID {id} was not found."
+        });
+    }
+
+    _logger.LogInformation(
+        "Character with ID {CharacterId} updated successfully.",
+        id);
+
+    return Ok(updatedCharacter);
 }
 
-      [HttpGet("{id}")]
-public async Task<IActionResult> GetById(int id)
+[HttpDelete("{id}")]
+public ActionResult<Character> Delete(int id)
 {
-    var character = await _context.Characters
-        .Include(c => c.Location)
-        .FirstOrDefaultAsync(c => c.Id == id);
+    var character = _repository.Delete(id);
 
     if (character == null)
     {
+        _logger.LogWarning(
+            "Delete request received for non-existent character with ID: {CharacterId}",
+            id);
+
         return NotFound(new
         {
             Message = $"Character with ID {id} was not found."
@@ -81,80 +114,38 @@ public async Task<IActionResult> GetById(int id)
 
     return Ok(character);
 }
-        
 
+[HttpGet("dto")]
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Character updatedCharacter)
-        {
-            if (id != updatedCharacter.Id)
-                return BadRequest();
+public ActionResult<IEnumerable<CharacterDTO>> GetCharacters()
+{
+    var characters = _repository.GetCharacters();
 
-            var character = await _context.Characters.FindAsync(id);
-
-            if (character == null)
-                return NotFound();
-
-            character.Name = updatedCharacter.Name;
-            character.Actor = updatedCharacter.Actor;
-            character.Occupation = updatedCharacter.Occupation;
-            character.University = updatedCharacter.University;
-            character.IQ = updatedCharacter.IQ;
-            character.Age = updatedCharacter.Age;
-            character.LocationId = updatedCharacter.LocationId;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-
-            _logger.LogInformation("Deleting character with ID: {CharacterId}", id);
-
-            var character = await _context.Characters.FindAsync(id);
-
-            if (character == null)
-                return NotFound();
-
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        [HttpGet("dto")]
-            public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacters([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
-        {
-            if (pageSize < 1 || pageSize > 50)
-            {
-                return BadRequest("PageSize must be between 1 and 50.");
-            }
-
-            var characters = await _context.Characters
-            .Select(f => new CharacterDTO
-        {
-            Id = f.Id,
-            Name = f.Name,
-            Actor = f.Actor,
-            Occupation = f.Occupation
-        })
-        .ToListAsync();
-
-            return Ok(characters);
-        }
-        [HttpGet("{id:int:min(1)}/episodes")]
-        public async Task<IActionResult> GetCharacterEpisodes(int id)
+    var charactersDto = characters.Select(c => new CharacterDTO
     {
-        var episodes = await _context.CharacterEpisodes
-            .Where(ce => ce.CharacterId == id)
-            .Select(ce => ce.Episode)
-            .ToListAsync();
+        Id = c.Id,
+        Name = c.Name,
+        Actor = c.Actor,
+        Occupation = c.Occupation
+    });
 
-        return Ok(episodes);
+    return Ok(charactersDto);
 }
+    [HttpGet("{id:int:min(1)}/episodes")]
+public ActionResult<IEnumerable<Episode>> GetCharacterEpisodes(int id)
+{
+    var episodes = _repository.GetEpisodesByCharacter(id);
 
+    if (!episodes.Any())
+    {
+        return NotFound(new
+        {
+            Message = $"No episodes were found for character {id}."
+        });
     }
+
+    return Ok(episodes);
 }
+
+        }
+    }
