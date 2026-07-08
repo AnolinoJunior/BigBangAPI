@@ -44,6 +44,8 @@ builder.Logging.AddProvider(
 builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddScoped<ApiExceptionFilter>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

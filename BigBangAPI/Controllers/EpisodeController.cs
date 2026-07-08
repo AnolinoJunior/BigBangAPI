@@ -1,7 +1,6 @@
-﻿using BigBangAPI.Context;
-using BigBangAPI.Models;
+﻿using BigBangAPI.Models;
+using BigBangAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BigBangAPI.Controllers
 {
@@ -9,30 +8,104 @@ namespace BigBangAPI.Controllers
     [Route("api/[controller]")]
     public class EpisodeController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IEpisodeRepository _repository;
 
-        public EpisodeController(AppDbContext context)
+        public EpisodeController(IEpisodeRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Episode episode)
+        public ActionResult<Episode> Create([FromBody] Episode episode)
         {
-            _context.Episodes.Add(episode);
+            if (episode == null)
+            {
+                return BadRequest();
+            }
 
-            await _context.SaveChangesAsync();
+            var newEpisode = _repository.Create(episode);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = newEpisode.Id },
+                newEpisode);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Episode>> Get()
+        {
+            var episodes = _repository.GetEpisodes();
+
+            return Ok(episodes);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Episode> GetById(int id)
+        {
+            var episode = _repository.GetEpisode(id);
+
+            if (episode == null)
+            {
+                return NotFound(new
+                {
+                    Message = $"Episode with ID {id} was not found."
+                });
+            }
 
             return Ok(episode);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpPut("{id}")]
+        public ActionResult<Episode> Update(int id, Episode episode)
         {
-            var episodes = await _context.Episodes
-                .ToListAsync();
+            if (id != episode.Id)
+            {
+                return BadRequest();
+            }
 
-            return Ok(episodes);
+            var updatedEpisode = _repository.Update(episode);
+
+            if (updatedEpisode == null)
+            {
+                return NotFound(new
+                {
+                    Message = $"Episode with ID {id} was not found."
+                });
+            }
+
+            return Ok(updatedEpisode);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Episode> Delete(int id)
+        {
+            var episode = _repository.Delete(id);
+
+            if (episode == null)
+            {
+                return NotFound(new
+                {
+                    Message = $"Episode with ID {id} was not found."
+                });
+            }
+
+            return Ok(episode);
+        }
+
+        [HttpGet("{id:int:min(1)}/characters")]
+        public ActionResult<IEnumerable<Character>> GetCharactersByEpisode(int id)
+        {
+            var characters = _repository.GetCharactersByEpisode(id);
+
+            if (!characters.Any())
+            {
+                return NotFound(new
+                {
+                    Message = $"No characters were found for episode {id}."
+                });
+            }
+
+            return Ok(characters);
         }
     }
 }
