@@ -2,18 +2,8 @@ using BigBangAPI.Models;
 
 namespace BigBangAPI.Repositories
 {
-    public interface IEpisodeRepository
+    public interface IEpisodeRepository : IRepository<Episode>
     {
-        IEnumerable<Episode> GetEpisodes();
-
-        Episode? GetEpisode(int id);
-
         IEnumerable<Character> GetCharactersByEpisode(int id);
-
-        Episode Create(Episode episode);
-
-        Episode? Update(Episode episode);
-
-        Episode? Delete(int id);
     }
 }
