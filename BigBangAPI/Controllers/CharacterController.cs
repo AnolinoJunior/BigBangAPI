@@ -1,151 +1,159 @@
-﻿    using BigBangAPI.DTO;
-    using BigBangAPI.Filters;
-    using BigBangAPI.Models;
-    using BigBangAPI.Repositories;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
+﻿using BigBangAPI.DTO;
+using BigBangAPI.Filters;
+using BigBangAPI.Models;
+using BigBangAPI.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
-    namespace BigBangAPI.Controllers
+namespace BigBangAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CharacterController : ControllerBase
     {
-        [ApiController]
-        [Route("api/[controller]")]
-        public class CharacterController : ControllerBase
-        {   
-            private readonly ICharacterRepository _repository;
-            private readonly ILogger<CharacterController> _logger;
+        private readonly IUnityOfWork _uof; 
+        private readonly ILogger<CharacterController> _logger;
 
-            public CharacterController(ICharacterRepository repository, ILogger<CharacterController> logger)
+        public CharacterController(
+            IUnityOfWork uof,
+            ILogger<CharacterController> logger)
+        {
+            _uof = uof;
+            _logger = logger;
+        }
+
+        [HttpPost]
+        public ActionResult<Character> Create([FromBody] Character character)
+        {
+            if (character is null)
             {
-                _repository = repository;
-                _logger = logger;
+                _logger.LogWarning("Create request received with a null character.");
+                return BadRequest();
             }
 
- [HttpPost]
-public ActionResult<Character> Create([FromBody] Character character)
-{
-    if (character is null)
-    {
-        _logger.LogWarning("Create request received with a null character.");
+            _logger.LogInformation(
+                "Creating a new character: {CharacterName}",
+                character.Name);
 
-        return BadRequest();
-    }
+            var novoCharacter = _uof.CharacterRepository.Create(character);
+            _uof.Commit();
 
-    _logger.LogInformation(
-        "Creating a new character: {CharacterName}",
-        character.Name);
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = novoCharacter.Id },
+                novoCharacter);
+        }
 
-    var novoCharacter = _repository.Create(character);
+        [HttpGet]
+        [ServiceFilter(typeof(ApiLoggingFilter))]
+        public ActionResult<IEnumerable<Character>> Get()
+        {
+            var characters = _uof.CharacterRepository.GetAll();
 
-    return CreatedAtAction(
-        nameof(GetById),
-        new { id = novoCharacter.Id },
-        novoCharacter);
-}
-    [HttpGet]
-    [ServiceFilter(typeof(ApiLoggingFilter))]
-    public ActionResult <IEnumerable<Character>> Get()
-    {
-        var characters = _repository.GetCharacters();
-
-        return Ok(characters);
-    }
+            return Ok(characters);
+        }
 
         [HttpGet("{id}")]
-    public ActionResult<Character> GetById(int id)
-    {
-        var character = _repository.GetCharacter(id);
-
-        if (character == null)
+        public ActionResult<Character> GetById(int id)
         {
-            return NotFound(new
+            var character = _uof.CharacterRepository.GetById(c => c.Id == id);
+
+            if (character == null)
             {
-                Message = $"Character with ID {id} was not found."
-            });
+                return NotFound(new
+                {
+                    Message = $"Character with ID {id} was not found."
+                });
+            }
+
+            return Ok(character);
         }
 
-        return Ok(character);
-    }
+        [HttpPut("{id}")]
+        public ActionResult<Character> Update(int id, Character character)
+        {
+            if (id != character.Id)
+            {
+                _logger.LogWarning(
+                    "Update request received with mismatched ID: {CharacterId} and character ID: {CharacterObjectId}",
+                    id,
+                    character.Id);
+
+                return BadRequest();
+            }
+
+            var updatedCharacter = _uof.CharacterRepository.Update(character);
+
+            _uof.Commit();
+
+            if (updatedCharacter == null)
+            {
+                return NotFound(new
+                {
+                    Message = $"Character with ID {id} was not found."
+                });
+            }
+
+            _logger.LogInformation(
+                "Character with ID {CharacterId} updated successfully.",
+                id);
+
+            return Ok(updatedCharacter);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Character> Delete(int id)
+        {
+            var character = _uof.CharacterRepository.GetById(c => c.Id == id);
             
-   [HttpPut("{id}")]
-public ActionResult<Character> Update(int id, Character character)
-{
-    if (id != character.Id)
-    {
-        _logger.LogWarning(
-            "Update request received with mismatched ID: {CharacterId} and character ID: {CharacterObjectId}",
-            id, character.Id);
 
-        return BadRequest();
-    }
+            if (character == null)
+            {
+                _logger.LogWarning(
+                    "Delete request received for non-existent character with ID: {CharacterId}",
+                    id);
 
-    var updatedCharacter = _repository.Update(character);
+                return NotFound(new
+                {
+                    Message = $"Character with ID {id} was not found."
+                });
+            }
 
-    if (updatedCharacter == null)
-    {
-        return NotFound(new
+            _uof.CharacterRepository.Delete(character);
+            _uof.Commit();
+
+            return Ok(character);
+        }
+
+        [HttpGet("dto")]
+        public ActionResult<IEnumerable<CharacterDTO>> GetCharacters()
         {
-            Message = $"Character with ID {id} was not found."
-        });
-    }
+            var characters = _uof.CharacterRepository.GetAll();
 
-    _logger.LogInformation(
-        "Character with ID {CharacterId} updated successfully.",
-        id);
+            var charactersDto = characters.Select(c => new CharacterDTO
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Actor = c.Actor,
+                Occupation = c.Occupation
+            });
 
-    return Ok(updatedCharacter);
-}
+            return Ok(charactersDto);
+        }
 
-[HttpDelete("{id}")]
-public ActionResult<Character> Delete(int id)
-{
-    var character = _repository.Delete(id);
-
-    if (character == null)
-    {
-        _logger.LogWarning(
-            "Delete request received for non-existent character with ID: {CharacterId}",
-            id);
-
-        return NotFound(new
+        [HttpGet("{id:int:min(1)}/episodes")]
+        public ActionResult<IEnumerable<Episode>> GetCharacterEpisodes(int id)
         {
-            Message = $"Character with ID {id} was not found."
-        });
-    }
+            var episodes = _uof.CharacterRepository.GetEpisodesByCharacter(id);
 
-    return Ok(character);
-}
+            if (!episodes.Any())
+            {
+                return NotFound(new
+                {
+                    Message = $"No episodes were found for character {id}."
+                });
+            }
 
-[HttpGet("dto")]
-
-public ActionResult<IEnumerable<CharacterDTO>> GetCharacters()
-{
-    var characters = _repository.GetCharacters();
-
-    var charactersDto = characters.Select(c => new CharacterDTO
-    {
-        Id = c.Id,
-        Name = c.Name,
-        Actor = c.Actor,
-        Occupation = c.Occupation
-    });
-
-    return Ok(charactersDto);
-}
-    [HttpGet("{id:int:min(1)}/episodes")]
-public ActionResult<IEnumerable<Episode>> GetCharacterEpisodes(int id)
-{
-    var episodes = _repository.GetEpisodesByCharacter(id);
-
-    if (!episodes.Any())
-    {
-        return NotFound(new
-        {
-            Message = $"No episodes were found for character {id}."
-        });
-    }
-
-    return Ok(episodes);
-}
-
+            return Ok(episodes);
         }
     }
+}

@@ -8,11 +8,11 @@ namespace BigBangAPI.Controllers
     [Route("api/[controller]")]
     public class EpisodeController : ControllerBase
     {
-        private readonly IEpisodeRepository _repository;
+        private readonly IUnityOfWork _uof;
 
-        public EpisodeController(IEpisodeRepository repository)
+        public EpisodeController(IUnityOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpPost]
@@ -23,7 +23,8 @@ namespace BigBangAPI.Controllers
                 return BadRequest();
             }
 
-            var newEpisode = _repository.Create(episode);
+            var newEpisode = _uof.EpisodeRepository.Create(episode);
+            _uof.Commit();
 
             return CreatedAtAction(
                 nameof(GetById),
@@ -34,7 +35,7 @@ namespace BigBangAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Episode>> Get()
         {
-            var episodes = _repository.GetEpisodes();
+            var episodes = _uof.EpisodeRepository.GetAll();
 
             return Ok(episodes);
         }
@@ -42,7 +43,7 @@ namespace BigBangAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Episode> GetById(int id)
         {
-            var episode = _repository.GetEpisode(id);
+            var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
 
             if (episode == null)
             {
@@ -63,7 +64,8 @@ namespace BigBangAPI.Controllers
                 return BadRequest();
             }
 
-            var updatedEpisode = _repository.Update(episode);
+            var updatedEpisode = _uof.EpisodeRepository.Update(episode);
+            _uof.Commit();
 
             if (updatedEpisode == null)
             {
@@ -79,7 +81,7 @@ namespace BigBangAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Episode> Delete(int id)
         {
-            var episode = _repository.Delete(id);
+            var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
 
             if (episode == null)
             {
@@ -89,13 +91,16 @@ namespace BigBangAPI.Controllers
                 });
             }
 
+            _uof.EpisodeRepository.Delete(episode);
+            _uof.Commit();
+
             return Ok(episode);
         }
 
         [HttpGet("{id:int:min(1)}/characters")]
         public ActionResult<IEnumerable<Character>> GetCharactersByEpisode(int id)
         {
-            var characters = _repository.GetCharactersByEpisode(id);
+            var characters = _uof.EpisodeRepository.GetCharactersByEpisode(id);
 
             if (!characters.Any())
             {

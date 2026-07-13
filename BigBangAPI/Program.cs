@@ -6,6 +6,7 @@ using BigBangAPI.Logging;
 using BigBangAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
@@ -46,6 +47,8 @@ builder.Services.AddScoped<ApiExceptionFilter>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
