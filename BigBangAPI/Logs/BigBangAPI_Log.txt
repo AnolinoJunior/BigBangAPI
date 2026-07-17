@@ -4,3 +4,5 @@ Warning: 10102 - The query uses a row limiting operator ('Skip'/'Take') without 
 Warning: 3 - Failed to determine the https port for redirect.
 Warning: 3 - Failed to determine the https port for redirect.
 Warning: 22 - As of "07/10/2026 11:41:50 +00:00", the heartbeat has been running for "00:00:01.4983592" which is longer than "00:00:01". This could be caused by thread pool starvation.
+Warning: 3 - Failed to determine the https port for redirect.
+Warning: 3 - Failed to determine the https port for redirect.

@@ -24,7 +24,7 @@ namespace BigBangAPI.Models
         public int IQ { get; set; }
 
         public int Age { get; set; }
-
+        public string? ImageUrl { get; set; }
         public int LocationId { get; set; }
         
         public Location ? Location { get; set; }

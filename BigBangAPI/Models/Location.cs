@@ -10,7 +10,7 @@
             [Key]
             public int Id { get; set; }
             [StringLength(45, ErrorMessage = "Name cannot be longer than 45 characters.")]
-            public string  Name { get; set; }
+            public string?  Name { get; set; }
 
             [JsonIgnore]
             public List<Character>? Characters { get; set; }
