@@ -30,7 +30,7 @@ builder.Services.AddControllers(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler =
         ReferenceHandler.IgnoreCycles;
-});
+}).AddNewtonsoftJson(); 
 
 // Logging customizado
 builder.Logging.AddProvider(

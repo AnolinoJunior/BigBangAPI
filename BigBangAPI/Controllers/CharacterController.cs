@@ -3,7 +3,8 @@
     using BigBangAPI.Filters;
     using BigBangAPI.Models;
     using BigBangAPI.Repositories;
-    using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 
     namespace BigBangAPI.Controllers
     {
@@ -150,6 +151,55 @@
                 var episodesDto = _mapper.Map<IEnumerable<EpisodeDTO>>(episodes);
 
                 return Ok(episodesDto);
+            }
+            [HttpPatch("{id}")]
+            public ActionResult<CharacterDTO> Patch(
+                int id,
+                [FromBody] JsonPatchDocument<CharacterUpdateDTO> patchDoc)
+            {
+                if (patchDoc == null)
+                {
+                    return BadRequest();
+                }
+
+                // Busca o personagem
+                var character = _uof.CharacterRepository.GetById(c => c.Id == id);
+
+                if (character == null)
+                {
+                    return NotFound(new
+                    {
+                        Message = $"Character with ID {id} was not found."
+                    });
+                }
+
+                // Converte Entity -> DTO
+                var characterToPatch = _mapper.Map<CharacterUpdateDTO>(character);
+
+                // Aplica o PATCH
+                patchDoc.ApplyTo(characterToPatch, ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // Valida os DataAnnotations do DTO
+                if (!TryValidateModel(characterToPatch))
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                // DTO -> Entity
+                _mapper.Map(characterToPatch, character);
+
+                _uof.CharacterRepository.Update(character);
+                _uof.Commit();
+
+                // Retorna DTO
+                var characterDto = _mapper.Map<CharacterDTO>(character);
+
+                return Ok(characterDto);
             }
         }
     }

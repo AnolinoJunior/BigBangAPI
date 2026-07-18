@@ -1,4 +1,6 @@
-﻿using BigBangAPI.Models;
+﻿using AutoMapper;
+using BigBangAPI.DTO;
+using BigBangAPI.Models;
 using BigBangAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,39 +11,50 @@ namespace BigBangAPI.Controllers
     public class EpisodeController : ControllerBase
     {
         private readonly IUnityOfWork _uof;
+        private readonly IMapper _mapper;
 
-        public EpisodeController(IUnityOfWork uof)
+        public EpisodeController(
+            IUnityOfWork uof,
+            IMapper mapper)
         {
             _uof = uof;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public ActionResult<Episode> Create([FromBody] Episode episode)
+        public ActionResult<EpisodeDTO> Create([FromBody] EpisodeCreateDTO dto)
         {
-            if (episode == null)
+            if (dto is null)
             {
                 return BadRequest();
             }
 
+            var episode = _mapper.Map<Episode>(dto);
+
             var newEpisode = _uof.EpisodeRepository.Create(episode);
+
             _uof.Commit();
+
+            var episodeDto = _mapper.Map<EpisodeDTO>(newEpisode);
 
             return CreatedAtAction(
                 nameof(GetById),
                 new { id = newEpisode.Id },
-                newEpisode);
+                episodeDto);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Episode>> Get()
+        public ActionResult<IEnumerable<EpisodeDTO>> Get()
         {
             var episodes = _uof.EpisodeRepository.GetAll();
 
-            return Ok(episodes);
+            var episodesDto = _mapper.Map<IEnumerable<EpisodeDTO>>(episodes);
+
+            return Ok(episodesDto);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Episode> GetById(int id)
+        public ActionResult<EpisodeDTO> GetById(int id)
         {
             var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
 
@@ -53,19 +66,22 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            return Ok(episode);
+            var dto = _mapper.Map<EpisodeDTO>(episode);
+
+            return Ok(dto);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Episode> Update(int id, Episode episode)
+        public ActionResult<EpisodeDTO> Update(int id, [FromBody] EpisodeUpdateDTO dto)
         {
-            if (id != episode.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
+            var episode = _mapper.Map<Episode>(dto);
+
             var updatedEpisode = _uof.EpisodeRepository.Update(episode);
-            _uof.Commit();
 
             if (updatedEpisode == null)
             {
@@ -75,11 +91,15 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            return Ok(updatedEpisode);
+            _uof.Commit();
+
+            var episodeDto = _mapper.Map<EpisodeDTO>(updatedEpisode);
+
+            return Ok(episodeDto);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Episode> Delete(int id)
+        public ActionResult<EpisodeDTO> Delete(int id)
         {
             var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
 
@@ -92,13 +112,16 @@ namespace BigBangAPI.Controllers
             }
 
             _uof.EpisodeRepository.Delete(episode);
+
             _uof.Commit();
 
-            return Ok(episode);
+            var dto = _mapper.Map<EpisodeDTO>(episode);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int:min(1)}/characters")]
-        public ActionResult<IEnumerable<Character>> GetCharactersByEpisode(int id)
+        public ActionResult<IEnumerable<CharacterDTO>> GetCharactersByEpisode(int id)
         {
             var characters = _uof.EpisodeRepository.GetCharactersByEpisode(id);
 
@@ -110,7 +133,9 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            return Ok(characters);
+            var charactersDto = _mapper.Map<IEnumerable<CharacterDTO>>(characters);
+
+            return Ok(charactersDto);
         }
     }
 }
