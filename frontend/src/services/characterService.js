@@ -11,6 +11,12 @@ export async function getCharacters({ pageNumber = 1, pageSize = 5 } = {}) {
   return response.data
 }
 
+export async function getCharacterById(characterId) {
+  const response = await api.get(`/Character/${characterId}`)
+
+  return response.data
+}
+
 export function getCharacterImageUrl(imageUrl) {
   if (!imageUrl) {
     return null

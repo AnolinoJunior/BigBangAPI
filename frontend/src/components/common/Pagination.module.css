@@ -15,15 +15,19 @@
   color: var(--color-primary-dark);
   font-weight: 800;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .button:hover:not(:disabled) {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
+  border-color: var(--color-secondary);
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .button:disabled {
-  color: #a5afbd;
+  border-color: #e4edf4;
+  color: #9aacba;
   cursor: not-allowed;
 }
 

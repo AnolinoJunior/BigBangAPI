@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
+import CharacterDetailsPage from '../pages/CharacterDetailsPage'
 import CharactersPage from '../pages/CharactersPage'
 import HomePage from '../pages/HomePage'
 import ResourcePlaceholderPage from '../pages/ResourcePlaceholderPage'
@@ -10,10 +11,7 @@ function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="characters" element={<CharactersPage />} />
-        <Route
-          path="characters/:characterId"
-          element={<ResourcePlaceholderPage resourceName="Detalhes do personagem" />}
-        />
+        <Route path="characters/:characterId" element={<CharacterDetailsPage />} />
         <Route
           path="episodes"
           element={<ResourcePlaceholderPage resourceName="Episodes" />}
