@@ -1,219 +1,348 @@
-![.NET](https://img.shields.io/badge/.NET-8-purple)
-
-![C#](https://img.shields.io/badge/C%23-ASP.NET%20Core-blue)
-
-![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
-
-![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-green)
-
 # 🚀 The Big Bang Theory API
 
-Uma API REST desenvolvida em ASP.NET Core (.NET 8), inspirada na Rick and Morty API, com o objetivo de aplicar conceitos modernos de desenvolvimento backend.
+![.NET](https://img.shields.io/badge/.NET-8-512BD4?logo=.net)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver)
+![Entity Framework Core](https://img.shields.io/badge/Entity%20Framework-Core-512BD4)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger)
+![License](https://img.shields.io/badge/License-MIT-success)
 
-Além do CRUD de personagens, episódios e locais, o projeto implementa recursos como Middleware, Action Filters, Logging Personalizado, Entity Framework Core, DTOs, Paginação e Tratamento Global de Exceções.
----
+Uma **REST API** desenvolvida com **ASP.NET Core (.NET 8)** inspirada no universo da série **The Big Bang Theory**, acompanhada por um **frontend em React** para consumo da API.
 
-## 🌎 Demonstração
-
-### API
-https://bigbangapi.somee.com
-
-### Swagger
-https://bigbangapi.somee.com/swagger
-
-### Site de Documentação
-https://bigbangapi.somee.com/docs
+O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização em camadas e conceitos utilizados no desenvolvimento de aplicações modernas.
 
 ---
 
-## 📸 Preview
+# 🌐 Demonstração
 
-Em breve.
+| Aplicação | Link |
+|------------|------|
+| API | https://bigbangapi.somee.com |
+| Swagger | https://bigbangapi.somee.com/swagger |
+| Documentação | https://bigbangapi.somee.com/docs |
 
 ---
 
-## ✨ Funcionalidades
+# 📸 Preview
 
-- CRUD completo de Personagens
-- CRUD completo de Episódios
-- CRUD completo de Locais
+## Frontend
+
+<img width="745" height="638" alt="image" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
+
+
+## Swagger
+
+<img width="911" height="652" alt="image" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
+
+
+---
+
+# ✨ Funcionalidades
+
+### 👥 Personagens
+
+- CRUD completo
 - Consulta por ID
 - Paginação
-- DTOs para projeção de dados
-- Relacionamento One-to-Many
-- Relacionamento Many-to-Many
-- Restrições de rotas
-- Middleware global para tratamento de exceções
-- Filtros personalizados (Action Filters)
-- Sistema de Logging personalizado
-- Logging utilizando ILogger
-- Repository Pattern
-- Provider de Logging customizado
-- Logs gravados automaticamente em arquivo
-- Swagger / OpenAPI
-- Entity Framework Core
-- SQL Server
-- ## 🏗️ Arquitetura da Aplicação
+- Imagens dinâmicas
+- Página de detalhes
 
-```text
-HTTP Request
-      │
-      ▼
-Controller
-      │
-      ▼
-Repository
-      │
-      ▼
-Entity Framework Core
-      │
-      ▼
-SQL Server
-```
-## 🛠️ Tecnologias
+### 📺 Episódios
 
-- ASP.NET Core Web API (.NET 8)
-- C#
-- Entity Framework Core
-- SQL Server
-- Swagger / OpenAPI
-- Git
-- GitHub
-- Repository Pattern
-- Dependency Injection
-- Somee Hosting
----
-## 🧩 Conceitos Aplicados
-- REST API
-- Repository Pattern
-- Dependency Injection
+- CRUD completo
+
+### 📍 Localizações
+
+- CRUD completo
+
+### ⚙ Recursos
+
+- DTOs
+- AutoMapper
+- Paginação
+- JSON Patch
 - Middleware
 - Action Filters
 - Exception Filters
-- Logging (ILogger)
-- Custom Logger Provider
-- DTO Pattern
-- LINQ
-- Paginação
-- Relacionamentos (1:N e N:N)
-- Tratamento Global de Exceçõe
-## 📂 Estrutura do Projeto
+- Logging Personalizado
+- Servir arquivos estáticos (wwwroot)
+- Swagger / OpenAPI
+- Seed de Dados
+
+---
+
+# 🏗 Arquitetura
 
 ```text
-BigBangAPI
-│
-├── Controllers
-├── Context
-├── DTO
-├── Extensions
-├── Filters
-├── Logging
-├── Models
-├── Repositories
-│   ├── ICharacterRepository
-│   └── CharacterRepository
-├── Validations
-├── Logs
-├── Migrations
-├── Program.cs
-└── appsettings.json
+                React + Vite
+                      │
+                 Axios (HTTP)
+                      │
+                      ▼
+            ASP.NET Core Web API
+                      │
+         ┌────────────┴────────────┐
+         ▼                         ▼
+ Repository Pattern         Middleware
+         │
+         ▼
+     Unit of Work
+         │
+         ▼
+ Entity Framework Core
+         │
+         ▼
+      SQL Server
 ```
 
 ---
 
-## ⚙️ Executando Localmente
+# 🛠 Tecnologias
 
-### Clonar repositório
+## Backend
+
+- ASP.NET Core 8
+- C#
+- Entity Framework Core
+- SQL Server
+- AutoMapper
+- Swagger / OpenAPI
+- JSON Patch
+
+## Frontend
+
+- React
+- Vite
+- React Router
+- Axios
+- CSS Modules
+
+## Ferramentas
+
+- Git
+- GitHub
+- Visual Studio
+- VS Code
+- Somee Hosting
+
+---
+
+# 📚 Conceitos Aplicados
+
+### Arquitetura
+
+- REST API
+- Repository Pattern
+- Generic Repository
+- Unit of Work
+- Dependency Injection
+
+### Persistência
+
+- Entity Framework Core
+- LINQ
+- SQL Server
+- Relacionamentos One-to-Many (1:N)
+- Relacionamentos Many-to-Many (N:N)
+
+### API
+
+- DTO Pattern
+- AutoMapper
+- Paginação
+- JSON Patch
+- Swagger / OpenAPI
+
+### Pipeline
+
+- Middleware
+- Action Filters
+- Exception Filters
+- Tratamento Global de Exceções
+
+### Logging
+
+- ILogger
+- Custom Logger Provider
+- Logs em arquivo
+
+### Frontend
+
+- React
+- Axios
+- React Router
+- CSS Modules
+- Consumo de APIs REST
+
+---
+
+# 📂 Estrutura do Projeto
+
+```text
+Projeto-BigBangAPI
+│
+├── BigBangAPI
+│   ├── Controllers
+│   ├── Context
+│   ├── DTOs
+│   ├── Extensions
+│   ├── Filters
+│   ├── Logging
+│   ├── Migrations
+│   ├── Models
+│   ├── Pagination
+│   ├── Properties
+│   ├── Repositories
+│   ├── Validations
+│   ├── wwwroot
+│   │   └── Images
+│   │       └── characters
+│   ├── Program.cs
+│   ├── appsettings.json
+│   └── BigBangAPI.csproj
+│
+├── frontend
+│   ├── public
+│   ├── src
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── routes
+│   │   ├── services
+│   │   └── styles
+│   ├── package.json
+│   ├── vite.config.js
+│   └── .env.example
+│
+└── README.md
+```
+
+---
+
+# ⚙ Como executar
+
+## Backend
+
+Clone o repositório:
 
 ```bash
 git clone https://github.com/AnolinoJunior/BigBangAPI.git
 ```
 
-### Entrar na pasta
+Entre na pasta:
 
 ```bash
-cd BigBangAPI
+cd BigBangAPI/BigBangAPI
 ```
 
-### Restaurar dependências
+Restaure as dependências:
 
 ```bash
 dotnet restore
 ```
 
-### Aplicar migrations
+Execute as migrations:
 
 ```bash
 dotnet ef database update
 ```
 
-### Executar projeto
+Inicie a API:
 
 ```bash
 dotnet run
 ```
 
----
-
-## 📖 Swagger
-
-Após iniciar a aplicação:
+A API estará disponível em:
 
 ```text
-https://localhost:5001/swagger
+http://localhost:5004
+```
+
+Swagger:
+
+```text
+http://localhost:5004/swagger
 ```
 
 ---
 
-## 🎯 Objetivos do Projeto
+## Frontend
 
-Este projeto foi criado para:
+Entre na pasta:
 
-- Estudo de APIs REST
-- Prática com Entity Framework Core
-- Modelagem de banco de dados relacional
-- Deploy em ambiente real
-- Portfólio de desenvolvimento backend
-- Disponibilização de uma API gratuita para estudantes
+```bash
+cd frontend
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Crie um arquivo `.env` baseado no exemplo:
+
+```env
+VITE_API_BASE_URL=http://localhost:5004/api
+```
+
+Execute:
+
+```bash
+npm run dev
+```
+
+Frontend:
+
+```text
+http://localhost:5173
+```
 
 ---
 
-## 🚀 Próximas Melhorias
+# 🎯 Objetivos
+
+Este projeto foi desenvolvido para praticar:
+
+- Desenvolvimento de APIs REST
+- Entity Framework Core
+- Arquitetura em Camadas
+- Repository Pattern
+- Unit of Work
+- AutoMapper
+- React consumindo APIs
+- Organização de código
+- Boas práticas de desenvolvimento
+- Deploy em ambiente real
+
+---
+
+# 🚀 Próximas melhorias
+
 - JWT Authentication
 - Refresh Token
 - Versionamento da API
 - FluentValidation
 - Docker
-- Cache
+- Redis Cache
 - Testes Unitários
+- Testes de Integração
 - Health Checks
 - CI/CD com GitHub Actions
----
-## 👨‍💻 Autor
-
-Anolino Alves dos Santos Junior
-
-GitHub:
-https://github.com/AnolinoJunior
-
-LinkedIn:
-(Adicionar LinkedIn)
 
 ---
 
-## ⭐ Contribuindo
+# 👨‍💻 Autor
 
-Contribuições são bem-vindas.
+**Anolino Alves dos Santos Junior**
 
-Se encontrar algum problema ou tiver sugestões:
-
-1. Faça um Fork
-2. Crie uma Branch
-3. Faça suas alterações
-4. Abra um Pull Request
+- GitHub: https://github.com/AnolinoJunior
+- LinkedIn: *(adicione o link do seu perfil)*
 
 ---
 
-## 📜 Licença
+# 📄 Licença
 
 Este projeto está licenciado sob a licença MIT.
