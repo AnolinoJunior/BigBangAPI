@@ -339,7 +339,7 @@ Este projeto foi desenvolvido para praticar:
 **Anolino Alves dos Santos Junior**
 
 - GitHub: https://github.com/AnolinoJunior
-- LinkedIn: *(adicione o link do seu perfil)*
+- LinkedIn: https://www.linkedin.com/in/anolino-alves-3b1b95158
 
 ---
 
