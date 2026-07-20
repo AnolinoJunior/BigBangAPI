@@ -4,10 +4,11 @@ namespace BigBangAPI.Repositories;
 
 public class UnityOfWork : IUnityOfWork
 {
-    private  ICharacterRepository? _characterRepository;
+    private ICharacterRepository? _characterRepository;
     private ILocationRepository? _locationRepository;
-    private  IEpisodeRepository? _episodeRepository;
-    public AppDbContext _context;
+    private IEpisodeRepository? _episodeRepository;
+
+    private readonly AppDbContext _context;
 
     public UnityOfWork(AppDbContext context)
     {
@@ -18,14 +19,15 @@ public class UnityOfWork : IUnityOfWork
     {
         get
         {
-            return _characterRepository ?? new CharacterRepository(_context);  
-             //if (_characterRepository == null)
-           // {
-               // _characterRepository = new CharacterRepository(_context);
-           // }
-            //return _characterRepository;
+            if (_characterRepository == null)
+            {
+                _characterRepository = new CharacterRepository(_context);
+            }
+
+            return _characterRepository;
         }
     }
+
     public ILocationRepository LocationRepository
     {
         get
@@ -34,9 +36,11 @@ public class UnityOfWork : IUnityOfWork
             {
                 _locationRepository = new LocationRepository(_context);
             }
+
             return _locationRepository;
         }
     }
+
     public IEpisodeRepository EpisodeRepository
     {
         get
@@ -45,6 +49,7 @@ public class UnityOfWork : IUnityOfWork
             {
                 _episodeRepository = new EpisodeRepository(_context);
             }
+
             return _episodeRepository;
         }
     }

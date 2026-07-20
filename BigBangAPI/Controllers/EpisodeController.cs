@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BigBangAPI.DTO;
 using BigBangAPI.Models;
+using BigBangAPI.Pagination;
 using BigBangAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +45,18 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EpisodeDTO>> Get()
+        public ActionResult<IEnumerable<EpisodeDTO>> Get(
+            [FromQuery] EpisodeParameters episodeParams)
         {
-            var episodes = _uof.EpisodeRepository.GetAll();
+            var episodes = _uof.EpisodeRepository.GetEpisodes(episodeParams);
+
+            if (!episodes.Any())
+            {
+                return NotFound(new
+                {
+                    Message = "No episodes found."
+                });
+            }
 
             var episodesDto = _mapper.Map<IEnumerable<EpisodeDTO>>(episodes);
 

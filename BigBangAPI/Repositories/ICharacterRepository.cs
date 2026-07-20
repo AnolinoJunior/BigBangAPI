@@ -1,9 +1,13 @@
 using BigBangAPI.Models;
-namespace BigBangAPI.Repositories
-{
-    public interface ICharacterRepository : IRepository<Character>
-    {
-    IEnumerable<Episode> GetEpisodesByCharacter(int id);
+using BigBangAPI.Pagination;
 
-    }
+namespace BigBangAPI.Repositories;
+
+public interface ICharacterRepository : IRepository<Character>
+{
+    IEnumerable<Character> GetCharacters(CharacterParameters characterParams);
+
+    Character? GetCharacterDetails(int id);
+
+    IEnumerable<Episode> GetEpisodesByCharacter(int id);
 }
