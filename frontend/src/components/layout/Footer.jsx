@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className={styles.footer}>
       <p>Big Bang API Explorer</p>
-      <p>Projeto de portf\u00f3lio desenvolvido com React.</p>
+      <p>Projeto de portfólio desenvolvido com React.</p>
     </footer>
   )
 }

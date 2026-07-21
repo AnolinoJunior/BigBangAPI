@@ -7,7 +7,9 @@ function ResourcePlaceholderPage({ resourceName }) {
       <p className={styles.eyebrow}>Em breve</p>
       <h1 id="resource-title">{resourceName}</h1>
       <p>
-        Esta se\u00e7\u00e3o receber\u00e1 sua listagem e opera\u00e7\u00f5es nas pr\u00f3ximas etapas.
+       <p>
+       Esta seção receberá sua listagem e operações nas próximas etapas.
+      </p>
       </p>
       <Link className={styles.backLink} to="/">
         Voltar para a Home

@@ -30,7 +30,7 @@ function HomePage() {
         </h1>
 
         <p className={styles.introduction}>
-          Um catálogo simples para navegar por personagens, episódios e locais.
+          Um catálogo para navegar por personagens, episódios e locais.
         </p>
       </div>
 

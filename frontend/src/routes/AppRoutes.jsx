@@ -4,6 +4,8 @@ import CharacterDetailsPage from '../pages/CharacterDetailsPage'
 import CharactersPage from '../pages/CharactersPage'
 import HomePage from '../pages/HomePage'
 import ResourcePlaceholderPage from '../pages/ResourcePlaceholderPage'
+import SeasonEpisodesPage from '../pages/SeasonEpisodesPage'
+import SeasonsPage from '../pages/SeasonsPage'
 
 function AppRoutes() {
   return (
@@ -12,10 +14,8 @@ function AppRoutes() {
         <Route index element={<HomePage />} />
         <Route path="characters" element={<CharactersPage />} />
         <Route path="characters/:characterId" element={<CharacterDetailsPage />} />
-        <Route
-          path="episodes"
-          element={<ResourcePlaceholderPage resourceName="Episodes" />}
-        />
+        <Route path="episodes" element={<SeasonsPage />} />
+        <Route path="episodes/season/:seasonNumber" element={<SeasonEpisodesPage />} />
         <Route
           path="locations"
           element={<ResourcePlaceholderPage resourceName="Locations" />}
