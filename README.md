@@ -11,7 +11,11 @@
 Uma **REST API** desenvolvida com **ASP.NET Core (.NET 8)** inspirada no universo da série **The Big Bang Theory**, acompanhada por um **frontend em React** para consumo da API.
 
 O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização em camadas e conceitos utilizados no desenvolvimento de aplicações modernas.
+## ⚠️ Aviso
 
+Este projeto foi desenvolvido exclusivamente para fins de estudo e demonstração de conhecimentos em ASP.NET Core, Entity Framework Core e desenvolvimento de APIs REST.
+
+A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem aos seus respectivos detentores de direitos autorais. Este projeto não possui qualquer vínculo oficial com a Warner Bros. ou seus proprietários e não tem finalidade comercial.
 ---
 
 # 🌐 Demonstração
