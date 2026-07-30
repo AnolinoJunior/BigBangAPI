@@ -12,13 +12,15 @@ namespace BigBangAPI.Repositories
         {
         }
 
-        public IEnumerable<Character> GetCharacters(CharacterParameters characterParams)
+        public PagedList<Character> GetCharacters(CharacterParameters characterParams)
         {
-            return GetAll()
-                .OrderBy(c => c.Name)
-                .Skip((characterParams.PageNumber - 1) * characterParams.PageSize)
-                .Take(characterParams.PageSize)
-                .ToList();
+            var characters = GetAll()
+                .OrderBy(c => c.Name);
+
+            return PagedList<Character>.ToPagedList(
+                characters,
+                characterParams.PageNumber,
+                characterParams.PageSize);
         }
 
         public Character? GetCharacterDetails(int id)
@@ -29,6 +31,7 @@ namespace BigBangAPI.Repositories
                     .ThenInclude(ce => ce.Episode)
                 .FirstOrDefault(c => c.Id == id);
         }
+
         public IEnumerable<Episode> GetEpisodesByCharacter(int id)
         {
             return _context.CharacterEpisodes

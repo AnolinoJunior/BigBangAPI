@@ -23,10 +23,10 @@ function HomePage() {
   return (
     <section className={styles.home} aria-labelledby="home-title">
       <div className={styles.hero}>
-        <p className={styles.eyebrow}>The Big Bang Theory</p>
+        
 
         <h1 id="home-title">
-          Tudo sobre The Big Bang Theory
+         Tudo sobre The Big <span style={{ color: "#f28c28" }}>Bang</span> Theory
         </h1>
 
         <p className={styles.introduction}>

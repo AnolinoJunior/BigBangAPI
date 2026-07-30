@@ -6,6 +6,7 @@ using BigBangAPI.Pagination;
 using BigBangAPI.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace BigBangAPI.Controllers
 {
@@ -69,11 +70,24 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            var charactersDto = _mapper.Map<IEnumerable<CharacterDTO>>(characters);
+            var metadata = new
+            {
+                characters.TotalCount,
+                characters.PageSize,
+                characters.CurrentPage,
+                characters.TotalPages,
+                characters.HasNext,
+                characters.HasPrevious
+            };
 
-            return Ok(charactersDto);
-        }
+    Response.Headers.Append(
+        "X-Pagination",
+        JsonSerializer.Serialize(metadata));
 
+    var charactersDto = _mapper.Map<IEnumerable<CharacterDTO>>(characters);
+
+    return Ok(charactersDto);
+}
         [HttpGet("{id}")]
         public ActionResult<CharacterDetailsDTO> GetById(int id)
         {

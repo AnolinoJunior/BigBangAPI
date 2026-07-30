@@ -5,7 +5,7 @@ namespace BigBangAPI.Repositories;
 
 public interface ICharacterRepository : IRepository<Character>
 {
-    IEnumerable<Character> GetCharacters(CharacterParameters characterParams);
+    PagedList<Character> GetCharacters(CharacterParameters characterParams);
 
     Character? GetCharacterDetails(int id);
 

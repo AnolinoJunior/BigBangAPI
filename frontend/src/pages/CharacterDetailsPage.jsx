@@ -2,7 +2,30 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import placeholderImage from '../assets/character-placeholder.svg'
 import { getCharacterById, getCharacterImageUrl } from '../services/characterService'
+import { getAllEpisodes } from '../services/episodeService'
 import styles from './CharacterDetailsPage.module.css'
+
+function groupEpisodesBySeason(characterEpisodes, allEpisodes) {
+  const characterEpisodeTitles = new Set(
+    characterEpisodes.map((episode) => (typeof episode === 'string' ? episode : episode.title)),
+  )
+  const episodesBySeason = new Map()
+
+  allEpisodes
+    .filter((episode) => characterEpisodeTitles.has(episode.title))
+    .forEach((episode) => {
+      const seasonEpisodes = episodesBySeason.get(episode.season) ?? []
+      seasonEpisodes.push(episode)
+      episodesBySeason.set(episode.season, seasonEpisodes)
+    })
+
+  return [...episodesBySeason.entries()]
+    .map(([season, episodes]) => ({
+      season,
+      episodes: episodes.sort((firstEpisode, secondEpisode) => firstEpisode.episodeNumber - secondEpisode.episodeNumber),
+    }))
+    .sort((firstSeason, secondSeason) => firstSeason.season - secondSeason.season)
+}
 
 function CharacterDetailsPage() {
   const { characterId } = useParams()
@@ -10,6 +33,8 @@ function CharacterDetailsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isNotFound, setIsNotFound] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [episodesBySeason, setEpisodesBySeason] = useState([])
+  const [openSeason, setOpenSeason] = useState(null)
 
   useEffect(() => {
     let ignoreResponse = false
@@ -20,10 +45,15 @@ function CharacterDetailsPage() {
       setErrorMessage('')
 
       try {
-        const characterDetails = await getCharacterById(characterId)
+        const [characterDetails, allEpisodes] = await Promise.all([
+          getCharacterById(characterId),
+          getAllEpisodes(),
+        ])
 
         if (!ignoreResponse) {
           setCharacter(characterDetails)
+          setEpisodesBySeason(groupEpisodesBySeason(characterDetails.episodes ?? [], allEpisodes))
+          setOpenSeason(null)
         }
       } catch (error) {
         if (ignoreResponse) {
@@ -31,6 +61,7 @@ function CharacterDetailsPage() {
         }
 
         setCharacter(null)
+        setEpisodesBySeason([])
 
         if (error.response?.status === 404) {
           setIsNotFound(true)
@@ -55,6 +86,10 @@ function CharacterDetailsPage() {
   function showPlaceholderOnError(event) {
     event.currentTarget.onerror = null
     event.currentTarget.src = placeholderImage
+  }
+
+  function toggleSeason(season) {
+    setOpenSeason((currentSeason) => (currentSeason === season ? null : season))
   }
 
   if (isLoading) {
@@ -126,13 +161,39 @@ function CharacterDetailsPage() {
       </div>
 
       <section className={styles.episodes} aria-labelledby="episodes-title">
-        <h2 id="episodes-title">Episódios</h2>
+        <h2 id="episodes-title">Participações</h2>
         {character.episodes?.length > 0 ? (
-          <ul>
-            {character.episodes.map((episode) => (
-              <li key={episode}>{episode}</li>
-            ))}
-          </ul>
+          <div className={styles.accordion}>
+            {episodesBySeason.map(({ season, episodes }) => {
+              const isOpen = openSeason === season
+
+              return (
+                <div className={styles.season} key={season}>
+                  <button
+                    aria-expanded={isOpen}
+                    className={styles.seasonButton}
+                    onClick={() => toggleSeason(season)}
+                    type="button"
+                  >
+                    <span aria-hidden="true" className={styles.seasonIndicator}>
+                      {isOpen ? '▼' : '▶'}
+                    </span>
+                    Temporada {season}
+                  </button>
+
+                  {isOpen && (
+                    <ul className={styles.episodeList}>
+                      {episodes.map((episode) => (
+                        <li key={episode.id}>
+                          Episódio {episode.episodeNumber} - {episode.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         ) : (
           <p>Nenhum episódio informado para este personagem.</p>
         )}
