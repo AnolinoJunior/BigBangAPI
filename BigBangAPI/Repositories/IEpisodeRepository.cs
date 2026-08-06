@@ -5,8 +5,8 @@ namespace BigBangAPI.Repositories
 {
     public interface IEpisodeRepository : IRepository<Episode>
     {
-        IEnumerable<Episode> GetEpisodes(EpisodeParameters episodeParams);
+        Task<IEnumerable<Episode>> GetEpisodesAsync(EpisodeParameters episodeParams);
 
-        IEnumerable<Character> GetCharactersByEpisode(int id);
+        Task<IEnumerable<Character>> GetCharactersByEpisodeAsync(int id);
     }
 }

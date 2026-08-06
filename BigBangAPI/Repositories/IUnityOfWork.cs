@@ -5,6 +5,7 @@ namespace BigBangAPI.Repositories
         ICharacterRepository CharacterRepository { get; }
         ILocationRepository LocationRepository { get; }
         IEpisodeRepository EpisodeRepository { get; }
-        void Commit();
+
+        Task CommitAsync();
     }
 }

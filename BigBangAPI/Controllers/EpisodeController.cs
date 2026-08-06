@@ -3,6 +3,7 @@ using BigBangAPI.DTO;
 using BigBangAPI.Models;
 using BigBangAPI.Pagination;
 using BigBangAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BigBangAPI.Controllers
@@ -22,8 +23,9 @@ namespace BigBangAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public ActionResult<EpisodeDTO> Create([FromBody] EpisodeCreateDTO dto)
+        public async Task<ActionResult<EpisodeDTO>> Create([FromBody] EpisodeCreateDTO dto)
         {
             if (dto is null)
             {
@@ -34,7 +36,7 @@ namespace BigBangAPI.Controllers
 
             var newEpisode = _uof.EpisodeRepository.Create(episode);
 
-            _uof.Commit();
+            await _uof.CommitAsync();
 
             var episodeDto = _mapper.Map<EpisodeDTO>(newEpisode);
 
@@ -45,10 +47,10 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EpisodeDTO>> Get(
+        public async Task<ActionResult<IEnumerable<EpisodeDTO>>> Get(
             [FromQuery] EpisodeParameters episodeParams)
         {
-            var episodes = _uof.EpisodeRepository.GetEpisodes(episodeParams);
+            var episodes = await _uof.EpisodeRepository.GetEpisodesAsync(episodeParams);
 
             if (!episodes.Any())
             {
@@ -64,9 +66,9 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<EpisodeDTO> GetById(int id)
+        public async Task<ActionResult<EpisodeDTO>> GetById(int id)
         {
-            var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
+            var episode = await _uof.EpisodeRepository.GetByIdAsync(e => e.Id == id);
 
             if (episode == null)
             {
@@ -81,19 +83,20 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
-        public ActionResult<EpisodeDTO> Update(int id, [FromBody] EpisodeUpdateDTO dto)
+        public async Task<ActionResult<EpisodeDTO>> Update(
+            int id,
+            [FromBody] EpisodeUpdateDTO dto)
         {
             if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            var episode = _mapper.Map<Episode>(dto);
+            var episode = await _uof.EpisodeRepository.GetByIdAsync(e => e.Id == id);
 
-            var updatedEpisode = _uof.EpisodeRepository.Update(episode);
-
-            if (updatedEpisode == null)
+            if (episode == null)
             {
                 return NotFound(new
                 {
@@ -101,17 +104,22 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            _uof.Commit();
+            _mapper.Map(dto, episode);
 
-            var episodeDto = _mapper.Map<EpisodeDTO>(updatedEpisode);
+            _uof.EpisodeRepository.Update(episode);
+
+            await _uof.CommitAsync();
+
+            var episodeDto = _mapper.Map<EpisodeDTO>(episode);
 
             return Ok(episodeDto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
-        public ActionResult<EpisodeDTO> Delete(int id)
+        public async Task<ActionResult<EpisodeDTO>> Delete(int id)
         {
-            var episode = _uof.EpisodeRepository.GetById(e => e.Id == id);
+            var episode = await _uof.EpisodeRepository.GetByIdAsync(e => e.Id == id);
 
             if (episode == null)
             {
@@ -123,7 +131,7 @@ namespace BigBangAPI.Controllers
 
             _uof.EpisodeRepository.Delete(episode);
 
-            _uof.Commit();
+            await _uof.CommitAsync();
 
             var dto = _mapper.Map<EpisodeDTO>(episode);
 
@@ -131,9 +139,9 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("{id:int:min(1)}/characters")]
-        public ActionResult<IEnumerable<CharacterDTO>> GetCharactersByEpisode(int id)
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersByEpisode(int id)
         {
-            var characters = _uof.EpisodeRepository.GetCharactersByEpisode(id);
+            var characters = await _uof.EpisodeRepository.GetCharactersByEpisodeAsync(id);
 
             if (!characters.Any())
             {

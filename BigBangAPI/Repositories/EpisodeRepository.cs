@@ -1,6 +1,7 @@
 using BigBangAPI.Context;
 using BigBangAPI.Models;
 using BigBangAPI.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigBangAPI.Repositories
 {
@@ -11,22 +12,22 @@ namespace BigBangAPI.Repositories
         {
         }
 
-        public IEnumerable<Episode> GetEpisodes(EpisodeParameters episodeParams)
+        public async Task<IEnumerable<Episode>> GetEpisodesAsync(EpisodeParameters episodeParams)
         {
-            return GetAll()
+            return await GetAll()
                 .OrderBy(e => e.Season)
                 .ThenBy(e => e.EpisodeNumber)
                 .Skip((episodeParams.PageNumber - 1) * episodeParams.PageSize)
                 .Take(episodeParams.PageSize)
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<Character> GetCharactersByEpisode(int id)
+        public async Task<IEnumerable<Character>> GetCharactersByEpisodeAsync(int id)
         {
-            return _context.CharacterEpisodes
+            return await _context.CharacterEpisodes
                 .Where(ce => ce.EpisodeId == id)
                 .Select(ce => ce.Character!)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

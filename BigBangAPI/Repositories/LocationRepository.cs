@@ -1,5 +1,6 @@
 using BigBangAPI.Context;
 using BigBangAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigBangAPI.Repositories
 {
@@ -10,11 +11,11 @@ namespace BigBangAPI.Repositories
         {
         }
 
-        public IEnumerable<Character> GetCharactersByLocation(int id)
+        public async Task<IEnumerable<Character>> GetCharactersByLocationAsync(int id)
         {
-            return _context.Characters
+            return await _context.Characters
                 .Where(c => c.LocationId == id)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

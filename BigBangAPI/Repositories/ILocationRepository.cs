@@ -2,8 +2,8 @@ using BigBangAPI.Models;
 
 namespace BigBangAPI.Repositories
 {
-   public interface ILocationRepository : IRepository<Location>
-{
-    IEnumerable<Character> GetCharactersByLocation(int id);
-}
+    public interface ILocationRepository : IRepository<Location>
+    {
+        Task<IEnumerable<Character>> GetCharactersByLocationAsync(int id);
+    }
 }

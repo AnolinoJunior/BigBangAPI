@@ -12,34 +12,41 @@ namespace BigBangAPI.Repositories
         {
         }
 
-        public PagedList<Character> GetCharacters(CharacterParameters characterParams)
+        public async Task<PagedList<Character>> GetCharactersAsync(CharacterParameters characterParams)
         {
-            var characters = GetAll()
-                .OrderBy(c => c.Name);
+            IQueryable<Character> characters = GetAll();
 
-            return PagedList<Character>.ToPagedList(
+            if (!string.IsNullOrWhiteSpace(characterParams.Name))
+            {
+                characters = characters.Where(c =>
+                    EF.Functions.Like(c.Name, $"%{characterParams.Name}%"));
+            }
+
+            characters = characters.OrderBy(c => c.Name);
+
+            return await PagedList<Character>.ToPagedListAsync(
                 characters,
                 characterParams.PageNumber,
                 characterParams.PageSize);
         }
 
-        public Character? GetCharacterDetails(int id)
+        public async Task<Character?> GetCharacterDetailsAsync(int id)
         {
-            return _context.Characters
+            return await _context.Characters
                 .Include(c => c.Location)
                 .Include(c => c.CharacterEpisodes!)
                     .ThenInclude(ce => ce.Episode)
-                .FirstOrDefault(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public IEnumerable<Episode> GetEpisodesByCharacter(int id)
+        public async Task<IEnumerable<Episode>> GetEpisodesByCharacterAsync(int id)
         {
-            return _context.CharacterEpisodes
+            return await _context.CharacterEpisodes
                 .Where(ce => ce.CharacterId == id)
                 .Select(ce => ce.Episode)
                 .Where(e => e != null)
                 .Select(e => e!)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

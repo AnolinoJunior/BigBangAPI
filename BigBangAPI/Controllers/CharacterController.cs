@@ -4,6 +4,7 @@ using BigBangAPI.Filters;
 using BigBangAPI.Models;
 using BigBangAPI.Pagination;
 using BigBangAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -28,8 +29,9 @@ namespace BigBangAPI.Controllers
             _logger = logger;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public ActionResult<CharacterDTO> Create([FromBody] CharacterCreateDTO dto)
+        public async Task<ActionResult<CharacterDTO>> Create([FromBody] CharacterCreateDTO dto)
         {
             if (dto is null)
             {
@@ -45,7 +47,7 @@ namespace BigBangAPI.Controllers
 
             var novoCharacter = _uof.CharacterRepository.Create(character);
 
-            _uof.Commit();
+            await _uof.CommitAsync();
 
             var characterDto = _mapper.Map<CharacterDTO>(novoCharacter);
 
@@ -57,10 +59,10 @@ namespace BigBangAPI.Controllers
 
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
-        public ActionResult<IEnumerable<CharacterDTO>> Get(
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> Get(
             [FromQuery] CharacterParameters characterParams)
         {
-            var characters = _uof.CharacterRepository.GetCharacters(characterParams);
+            var characters = await _uof.CharacterRepository.GetCharactersAsync(characterParams);
 
             if (!characters.Any())
             {
@@ -80,19 +82,19 @@ namespace BigBangAPI.Controllers
                 characters.HasPrevious
             };
 
-    Response.Headers.Append(
-        "X-Pagination",
-        JsonSerializer.Serialize(metadata));
+            Response.Headers.Append(
+                "X-Pagination",
+                JsonSerializer.Serialize(metadata));
 
-    var charactersDto = _mapper.Map<IEnumerable<CharacterDTO>>(characters);
+            var charactersDto = _mapper.Map<IEnumerable<CharacterDTO>>(characters);
 
-    return Ok(charactersDto);
-}
+            return Ok(charactersDto);
+        }
+
         [HttpGet("{id}")]
-        public ActionResult<CharacterDetailsDTO> GetById(int id)
+        public async Task<ActionResult<CharacterDetailsDTO>> GetById(int id)
         {
-            // ALTERAÇÃO AQUI
-            var character = _uof.CharacterRepository.GetCharacterDetails(id);
+            var character = await _uof.CharacterRepository.GetCharacterDetailsAsync(id);
 
             if (character == null)
             {
@@ -107,21 +109,21 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
-        public ActionResult<CharacterDTO> Update(int id, [FromBody] CharacterUpdateDTO dto)
+        public async Task<ActionResult<CharacterDTO>> Update(
+            int id,
+            [FromBody] CharacterUpdateDTO dto)
         {
             if (id != dto.Id)
             {
                 _logger.LogWarning("Update request received with mismatched ID.");
-
                 return BadRequest();
             }
 
-            var character = _mapper.Map<Character>(dto);
+            var character = await _uof.CharacterRepository.GetByIdAsync(c => c.Id == id);
 
-            var updatedCharacter = _uof.CharacterRepository.Update(character);
-
-            if (updatedCharacter == null)
+            if (character == null)
             {
                 return NotFound(new
                 {
@@ -129,17 +131,22 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            _uof.Commit();
+            _mapper.Map(dto, character);
 
-            var characterDto = _mapper.Map<CharacterDTO>(updatedCharacter);
+            _uof.CharacterRepository.Update(character);
+
+            await _uof.CommitAsync();
+
+            var characterDto = _mapper.Map<CharacterDTO>(character);
 
             return Ok(characterDto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
-        public ActionResult<CharacterDTO> Delete(int id)
+        public async Task<ActionResult<CharacterDTO>> Delete(int id)
         {
-            var character = _uof.CharacterRepository.GetById(c => c.Id == id);
+            var character = await _uof.CharacterRepository.GetByIdAsync(c => c.Id == id);
 
             if (character == null)
             {
@@ -154,7 +161,8 @@ namespace BigBangAPI.Controllers
             }
 
             _uof.CharacterRepository.Delete(character);
-            _uof.Commit();
+
+            await _uof.CommitAsync();
 
             var dto = _mapper.Map<CharacterDTO>(character);
 
@@ -162,9 +170,9 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("{id:int:min(1)}/episodes")]
-        public ActionResult<IEnumerable<EpisodeDTO>> GetCharacterEpisodes(int id)
+        public async Task<ActionResult<IEnumerable<EpisodeDTO>>> GetCharacterEpisodes(int id)
         {
-            var episodes = _uof.CharacterRepository.GetEpisodesByCharacter(id);
+            var episodes = await _uof.CharacterRepository.GetEpisodesByCharacterAsync(id);
 
             if (!episodes.Any())
             {
@@ -179,8 +187,9 @@ namespace BigBangAPI.Controllers
             return Ok(episodesDto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPatch("{id}")]
-        public ActionResult<CharacterDTO> Patch(
+        public async Task<ActionResult<CharacterDTO>> Patch(
             int id,
             [FromBody] JsonPatchDocument<CharacterUpdateDTO> patchDoc)
         {
@@ -189,7 +198,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest();
             }
 
-            var character = _uof.CharacterRepository.GetById(c => c.Id == id);
+            var character = await _uof.CharacterRepository.GetByIdAsync(c => c.Id == id);
 
             if (character == null)
             {
@@ -216,7 +225,8 @@ namespace BigBangAPI.Controllers
             _mapper.Map(characterToPatch, character);
 
             _uof.CharacterRepository.Update(character);
-            _uof.Commit();
+
+            await _uof.CommitAsync();
 
             var characterDto = _mapper.Map<CharacterDTO>(character);
 

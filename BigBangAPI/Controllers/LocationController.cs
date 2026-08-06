@@ -2,7 +2,9 @@
 using BigBangAPI.DTO;
 using BigBangAPI.Models;
 using BigBangAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigBangAPI.Controllers
 {
@@ -22,9 +24,11 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<LocationDTO>> Get()
+        public async Task<ActionResult<IEnumerable<LocationDTO>>> Get()
         {
-            var locations = _uof.LocationRepository.GetAll();
+            var locations = await _uof.LocationRepository
+                .GetAll()
+                .ToListAsync();
 
             var locationsDto = _mapper.Map<IEnumerable<LocationDTO>>(locations);
 
@@ -32,9 +36,9 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LocationDTO> GetById(int id)
+        public async Task<ActionResult<LocationDTO>> GetById(int id)
         {
-            var location = _uof.LocationRepository.GetById(l => l.Id == id);
+            var location = await _uof.LocationRepository.GetByIdAsync(l => l.Id == id);
 
             if (location == null)
             {
@@ -49,8 +53,9 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public ActionResult<LocationDTO> Create([FromBody] LocationCreateDTO dto)
+        public async Task<ActionResult<LocationDTO>> Create([FromBody] LocationCreateDTO dto)
         {
             if (dto is null)
             {
@@ -61,7 +66,7 @@ namespace BigBangAPI.Controllers
 
             var newLocation = _uof.LocationRepository.Create(location);
 
-            _uof.Commit();
+            await _uof.CommitAsync();
 
             var locationDto = _mapper.Map<LocationDTO>(newLocation);
 
@@ -71,19 +76,20 @@ namespace BigBangAPI.Controllers
                 locationDto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
-        public ActionResult<LocationDTO> Update(int id, [FromBody] LocationUpdateDTO dto)
+        public async Task<ActionResult<LocationDTO>> Update(
+            int id,
+            [FromBody] LocationUpdateDTO dto)
         {
             if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            var location = _mapper.Map<Location>(dto);
+            var location = await _uof.LocationRepository.GetByIdAsync(l => l.Id == id);
 
-            var updatedLocation = _uof.LocationRepository.Update(location);
-
-            if (updatedLocation == null)
+            if (location == null)
             {
                 return NotFound(new
                 {
@@ -91,17 +97,22 @@ namespace BigBangAPI.Controllers
                 });
             }
 
-            _uof.Commit();
+            _mapper.Map(dto, location);
 
-            var locationDto = _mapper.Map<LocationDTO>(updatedLocation);
+            _uof.LocationRepository.Update(location);
+
+            await _uof.CommitAsync();
+
+            var locationDto = _mapper.Map<LocationDTO>(location);
 
             return Ok(locationDto);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
-        public ActionResult<LocationDTO> Delete(int id)
+        public async Task<ActionResult<LocationDTO>> Delete(int id)
         {
-            var location = _uof.LocationRepository.GetById(l => l.Id == id);
+            var location = await _uof.LocationRepository.GetByIdAsync(l => l.Id == id);
 
             if (location == null)
             {
@@ -113,7 +124,7 @@ namespace BigBangAPI.Controllers
 
             _uof.LocationRepository.Delete(location);
 
-            _uof.Commit();
+            await _uof.CommitAsync();
 
             var dto = _mapper.Map<LocationDTO>(location);
 
@@ -121,9 +132,9 @@ namespace BigBangAPI.Controllers
         }
 
         [HttpGet("{id:int:min(1)}/characters")]
-        public ActionResult<IEnumerable<CharacterDTO>> GetCharactersByLocation(int id)
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersByLocation(int id)
         {
-            var characters = _uof.LocationRepository.GetCharactersByLocation(id);
+            var characters = await _uof.LocationRepository.GetCharactersByLocationAsync(id);
 
             if (!characters.Any())
             {

@@ -5,9 +5,9 @@ namespace BigBangAPI.Repositories;
 
 public interface ICharacterRepository : IRepository<Character>
 {
-    PagedList<Character> GetCharacters(CharacterParameters characterParams);
+    Task<PagedList<Character>> GetCharactersAsync(CharacterParameters characterParams);
 
-    Character? GetCharacterDetails(int id);
+    Task<Character?> GetCharacterDetailsAsync(int id);
 
-    IEnumerable<Episode> GetEpisodesByCharacter(int id);
+    Task<IEnumerable<Episode>> GetEpisodesByCharacterAsync(int id);
 }
