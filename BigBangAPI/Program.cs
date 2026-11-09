@@ -24,11 +24,11 @@ var database = configuration["SqlServer:Database"];
 var trustedConnection = configuration["SqlServer:TrustedConnection"];
 var trustServerCertificate = configuration["SqlServer:TrustServerCertificate"];
 
-var connectionString =
-    $"Server={server};" +
-    $"Database={database};" +
-    $"Trusted_Connection={trustedConnection};" +
-    $"TrustServerCertificate={trustServerCertificate};";
+var connectionString = configuration.GetConnectionString("DefaultConnection")
+    ?? ($"Server={server};" +
+        $"Database={database};" +
+        $"Trusted_Connection={trustedConnection};" +
+        $"TrustServerCertificate={trustServerCertificate};");
 
 #endregion
 
@@ -153,7 +153,12 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(
+    options =>
+    {
+        options.LicenseKey = configuration["AutoMapper:LicenseKey"];
+    },
+    AppDomain.CurrentDomain.GetAssemblies());
 
 #endregion
 
@@ -235,6 +240,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapFallbackToFile("index.html");
+
 #endregion
 
-app.Run();
+app.Run();  

@@ -1,14 +1,20 @@
 import api from './api'
 
-export async function getCharacters({ pageNumber = 1, pageSize = 5 } = {}) {
+export async function getCharacters({ pageNumber = 1, pageSize = 5, name = '' } = {}) {
   const response = await api.get('/Character', {
     params: {
       pageNumber,
       pageSize,
+      ...(name.trim() && { Name: name.trim() }),
     },
   })
 
-  return response.data
+  const paginationHeader = response.headers['x-pagination']
+
+  return {
+    characters: response.data,
+    pagination: paginationHeader ? JSON.parse(paginationHeader) : null,
+  }
 }
 
 export async function getCharacterById(characterId) {
@@ -27,6 +33,7 @@ export function getCharacterImageUrl(imageUrl) {
   }
 
   const imageFileName = imageUrl.replace(/^\/?(?:images\/characters\/)?/i, '')
+  const apiBaseUrl = new URL(api.defaults.baseURL, window.location.origin)
 
-  return new URL(`/images/characters/${imageFileName}`, api.defaults.baseURL).toString()
+  return new URL(`/images/characters/${imageFileName}`, apiBaseUrl).toString()
 }

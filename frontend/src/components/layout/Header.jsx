@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import styles from './Header.module.css'
 
 const navigationItems = [
@@ -9,6 +10,14 @@ const navigationItems = [
 ]
 
 function Header() {
+  const navigate = useNavigate()
+  const { isAdmin, isAuthenticated, logout } = useAuth()
+
+  function handleLogout() {
+    logout()
+    navigate('/', { replace: true })
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.content}>
@@ -30,6 +39,37 @@ function Header() {
                 </NavLink>
               </li>
             ))}
+            {!isAuthenticated && (
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    `${styles.link} ${isActive ? styles.active : ''}`
+                  }
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              </li>
+            )}
+            {isAdmin && (
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    `${styles.link} ${isActive ? styles.active : ''}`
+                  }
+                  to="/admin"
+                >
+                  Painel Admin
+                </NavLink>
+              </li>
+            )}
+            {isAuthenticated && (
+              <li>
+                <button className={`${styles.link} ${styles.logout}`} onClick={handleLogout} type="button">
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
