@@ -36,7 +36,7 @@ function AdminEpisodesPage() {
         }
       } catch (error) {
         if (!ignoreResponse) {
-          setErrorMessage(getApiMessage(error, 'Não foi possível carregar os episodes.'))
+          setErrorMessage(getApiMessage(error, 'Não foi possível carregar os episódios.'))
         }
       } finally {
         if (!ignoreResponse) setIsLoading(false)
@@ -63,17 +63,17 @@ function AdminEpisodesPage() {
     try {
       if (formEpisode) {
         await updateEpisode(formEpisode.id, episodeData)
-        setSuccessMessage('Episode atualizado com sucesso.')
+        setSuccessMessage('Episódio atualizado com sucesso.')
       } else {
         await createEpisode(episodeData)
-        setSuccessMessage('Episode criado com sucesso.')
+        setSuccessMessage('Episódio criado com sucesso.')
       }
 
       setIsFormOpen(false)
       setFormEpisode(null)
       setReloadKey((key) => key + 1)
     } catch (error) {
-      setFormError(getApiMessage(error, 'Não foi possível salvar o episode.'))
+      setFormError(getApiMessage(error, 'Não foi possível salvar o episódio.'))
     } finally {
       setIsSaving(false)
     }
@@ -87,11 +87,11 @@ function AdminEpisodesPage() {
 
     try {
       await deleteEpisode(episodeToDelete.id)
-      setSuccessMessage('Episode excluído com sucesso.')
+      setSuccessMessage('Episódio excluído com sucesso.')
       setEpisodeToDelete(null)
       setReloadKey((key) => key + 1)
     } catch (error) {
-      setErrorMessage(getApiMessage(error, 'Não foi possível excluir o episode.'))
+      setErrorMessage(getApiMessage(error, 'Não foi possível excluir o episódio.'))
       setEpisodeToDelete(null)
     } finally {
       setIsDeleting(false)
@@ -102,19 +102,19 @@ function AdminEpisodesPage() {
     <section>
       <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-          <h1 className="h3 mb-1">Episodes Administration</h1>
+          <h1 className="h3 mb-1">Gerenciamento de episódios</h1>
           <p className="text-body-secondary mb-0">Gerencie os episódios cadastrados na API.</p>
         </div>
-        <button className="btn btn-primary" onClick={() => openForm()} type="button">Novo Episode</button>
+        <button className="btn btn-primary" onClick={() => openForm()} type="button">Novo episódio</button>
       </div>
 
       {successMessage && <div className="alert alert-success" role="status">{successMessage}</div>}
       {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
 
-      {isLoading && <div className="text-center py-5"><div aria-label="Carregando episodes" className="spinner-border" role="status" /></div>}
+      {isLoading && <div className="text-center py-5"><div aria-label="Carregando episódios" className="spinner-border" role="status" /></div>}
 
       {!isLoading && !errorMessage && episodes.length === 0 && (
-        <div className="alert alert-info mb-0">Nenhum episode foi encontrado.</div>
+        <div className="alert alert-info mb-0">Nenhum episódio foi encontrado.</div>
       )}
 
       {!isLoading && episodes.length > 0 && (
@@ -148,7 +148,7 @@ function AdminEpisodesPage() {
       )}
 
       {isFormOpen && <EpisodeFormModal episode={formEpisode} errorMessage={formError} isSaving={isSaving} onCancel={() => setIsFormOpen(false)} onSave={handleSave} />}
-      {episodeToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${episodeToDelete.title}? Esta ação não pode ser desfeita.`} onCancel={() => setEpisodeToDelete(null)} onConfirm={handleDelete} title="Excluir Episode" />}
+      {episodeToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${episodeToDelete.title}? Esta ação não pode ser desfeita.`} onCancel={() => setEpisodeToDelete(null)} onConfirm={handleDelete} title="Excluir episódio" />}
     </section>
   )
 }

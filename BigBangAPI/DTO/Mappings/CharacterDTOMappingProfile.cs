@@ -7,11 +7,11 @@ namespace BigBangAPI.DTO.Mappings
     {
         public CharacterDTOMappingProfile()
         {
-            // Entity -> DTO (Lista)
+            // Entidade -> DTO (Lista)
             CreateMap<Character, CharacterDTO>()
                 .ReverseMap();
 
-            // Entity -> DTO (Detalhes)
+            // Entidade -> DTO (Detalhes)
             CreateMap<Character, CharacterDetailsDTO>()
                 .ForMember(dest => dest.LocationName,
                     opt => opt.MapFrom(src =>
@@ -26,10 +26,10 @@ namespace BigBangAPI.DTO.Mappings
                                 .ToList()
                             : new List<string>()));
 
-            // DTO de criação -> Entity
+            // DTO de criação -> Entidade
             CreateMap<CharacterCreateDTO, Character>();
 
-            // DTO de atualização -> Entity
+            // DTO de atualização -> Entidade
             CreateMap<CharacterUpdateDTO, Character>();
         }
     }

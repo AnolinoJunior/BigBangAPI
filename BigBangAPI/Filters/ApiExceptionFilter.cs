@@ -13,9 +13,9 @@ namespace BigBangAPI.Filters;
 
         public void OnException(ExceptionContext context)
         {
-            _logger.LogError(context.Exception, "Ocorreu uma exceção não tratada : Status Code 500");
+            _logger.LogError(context.Exception, "Ocorreu uma exceção não tratada (HTTP 500).");
             context.ExceptionHandled = true;
-            context.Result = new Microsoft.AspNetCore.Mvc.ObjectResult(new { error = "Ocorreu um problema ao tratar a sua solicitação : Status Code 500" })
+            context.Result = new Microsoft.AspNetCore.Mvc.ObjectResult(new { error = "Ocorreu um erro ao processar a solicitação (HTTP 500)." })
             {
                 StatusCode = 500
             };

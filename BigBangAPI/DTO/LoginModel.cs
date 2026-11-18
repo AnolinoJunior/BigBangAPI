@@ -4,10 +4,10 @@ namespace BigBangAPI.DTO
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Nome de usário é obrigatório")]
+        [Required(ErrorMessage = "Informe o nome de usuário.")]
         public  string? UserName { get; set; }
 
-        [Required(ErrorMessage = "Senha é obrigatória")]
+        [Required(ErrorMessage = "Informe a senha.")]
 
         public string? Password { get; set; }
     }

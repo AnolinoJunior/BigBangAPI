@@ -29,18 +29,19 @@ namespace BigBangAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>Cadastra um personagem.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<CharacterDTO>> Create([FromBody] CharacterCreateDTO dto)
         {
             if (dto is null)
             {
-                _logger.LogWarning("Create request received with a null character.");
+                _logger.LogWarning("Foi recebida uma solicitação de criação com um personagem nulo.");
                 return BadRequest();
             }
 
             _logger.LogInformation(
-                "Creating a new character: {CharacterName}",
+                "Criando o personagem {CharacterName}.",
                 dto.Name);
 
             var character = _mapper.Map<Character>(dto);
@@ -57,6 +58,7 @@ namespace BigBangAPI.Controllers
                 characterDto);
         }
 
+        /// <summary>Lista os personagens com paginação.</summary>
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> Get(
@@ -68,7 +70,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = "No characters found."
+                    Message = "Nenhum personagem encontrado."
                 });
             }
 
@@ -91,6 +93,7 @@ namespace BigBangAPI.Controllers
             return Ok(charactersDto);
         }
 
+        /// <summary>Consulta os detalhes de um personagem pelo ID.</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterDetailsDTO>> GetById(int id)
         {
@@ -100,7 +103,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"O personagem com ID {id} não foi encontrado."
                 });
             }
 
@@ -109,6 +112,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Atualiza um personagem.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<ActionResult<CharacterDTO>> Update(
@@ -117,7 +121,7 @@ namespace BigBangAPI.Controllers
         {
             if (id != dto.Id)
             {
-                _logger.LogWarning("Update request received with mismatched ID.");
+                _logger.LogWarning("Foi recebida uma solicitação de atualização com IDs divergentes.");
                 return BadRequest();
             }
 
@@ -127,7 +131,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"O personagem com ID {id} não foi encontrado."
                 });
             }
 
@@ -142,6 +146,7 @@ namespace BigBangAPI.Controllers
             return Ok(characterDto);
         }
 
+        /// <summary>Exclui um personagem.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<CharacterDTO>> Delete(int id)
@@ -151,12 +156,12 @@ namespace BigBangAPI.Controllers
             if (character == null)
             {
                 _logger.LogWarning(
-                    "Delete request received for non-existent character with ID: {CharacterId}",
+                    "Foi solicitada a exclusão do personagem inexistente com ID {CharacterId}.",
                     id);
 
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"O personagem com ID {id} não foi encontrado."
                 });
             }
 
@@ -169,6 +174,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Lista os episódios em que o personagem aparece.</summary>
         [HttpGet("{id:int:min(1)}/episodes")]
         public async Task<ActionResult<IEnumerable<EpisodeDTO>>> GetCharacterEpisodes(int id)
         {
@@ -178,7 +184,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No episodes were found for character {id}."
+                    Message = $"Nenhum episódio encontrado para o personagem {id}."
                 });
             }
 
@@ -187,6 +193,7 @@ namespace BigBangAPI.Controllers
             return Ok(episodesDto);
         }
 
+        /// <summary>Atualiza campos específicos de um personagem com JSON Patch.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPatch("{id}")]
         public async Task<ActionResult<CharacterDTO>> Patch(
@@ -204,7 +211,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"O personagem com ID {id} não foi encontrado."
                 });
             }
 

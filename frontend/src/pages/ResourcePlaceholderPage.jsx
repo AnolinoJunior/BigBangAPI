@@ -10,7 +10,7 @@ function ResourcePlaceholderPage({ resourceName }) {
         Esta seção receberá sua listagem e operações nas próximas etapas.
       </p>
       <Link className={styles.backLink} to="/">
-        Voltar para a Home
+        Voltar para o início
       </Link>
     </section>
   )

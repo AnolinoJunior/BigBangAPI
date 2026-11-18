@@ -29,8 +29,9 @@ namespace BigBangAPI.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
-        #region Roles
+        #region Funções de acesso
 
+        /// <summary>Cria uma função de acesso.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [Route("CreateRole")]
@@ -49,7 +50,7 @@ namespace BigBangAPI.Controllers
                         new Response
                         {
                             Status = "Success",
-                            Message = $"Role '{roleName}' added successfully."
+                            Message = $"Função '{roleName}' adicionada com sucesso."
                         });
                 }
                 else
@@ -58,7 +59,7 @@ namespace BigBangAPI.Controllers
                         new Response
                         {
                             Status = "Error",
-                            Message = $"Issue adding the new '{roleName}' role."
+                            Message = $"Não foi possível adicionar a função '{roleName}'."
                         });
                 }
             }
@@ -67,9 +68,10 @@ namespace BigBangAPI.Controllers
                 new Response
                 {
                     Status = "Error",
-                    Message = "Role already exists."
+                    Message = "A função já existe."
                 });
         }
+            /// <summary>Adiciona um usuário a uma função.</summary>
             [Authorize(Policy = "AdminOnly")]
             [HttpPost]
             [Route("AddUserToRole")]
@@ -87,7 +89,7 @@ namespace BigBangAPI.Controllers
                             new Response
                             {
                                 Status = "Success",
-                                Message = $"User {user.Email} added to the {roleName} role."
+                                Message = $"O usuário {user.Email} foi adicionado à função {roleName}."
                             });
                     }
                     else
@@ -96,14 +98,14 @@ namespace BigBangAPI.Controllers
                             new Response
                             {
                                 Status = "Error",
-                                Message = $"Error: Unable to add user {user.Email} to the {roleName} role."
+                                Message = $"Não foi possível adicionar o usuário {user.Email} à função {roleName}."
                             });
                     }
                 }
 
                 return BadRequest(new
                 {
-                    Error = "Unable to find user."
+                    Error = "Usuário não encontrado."
                 });
             }
         
@@ -111,6 +113,7 @@ namespace BigBangAPI.Controllers
     
          #region Login
 
+        /// <summary>Autentica um usuário e emite os tokens de acesso e de renovação.</summary>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
@@ -127,7 +130,7 @@ namespace BigBangAPI.Controllers
                     return Unauthorized(new Response
                     {
                         Status = "Error",
-                        Message = "Invalid username or password."
+                        Message = "Nome de usuário ou senha inválidos."
                     });
                 }
 
@@ -172,7 +175,7 @@ namespace BigBangAPI.Controllers
                     return BadRequest(new
                     {
                         Status = "Error",
-                        Message = "Unable to update user.",
+                        Message = "Não foi possível atualizar o usuário.",
                         Errors = updateResult.Errors.Select(e => e.Description)
                     });
                 }
@@ -191,15 +194,16 @@ namespace BigBangAPI.Controllers
             {
                 return StatusCode(500, new
                 {
-                    Message = "An unexpected error occurred while processing the login request."
+                    Message = "Ocorreu um erro inesperado ao processar a solicitação de login."
                 });
             }
         }
 
         #endregion
 
-        #region Register
+        #region Cadastro
 
+        /// <summary>Cadastra um usuário.</summary>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
@@ -214,7 +218,7 @@ namespace BigBangAPI.Controllers
                 return Conflict(new Response
                 {
                     Status = "Error",
-                    Message = "User already exists."
+                    Message = "O nome de usuário já está em uso."
                 });
             }
 
@@ -226,7 +230,7 @@ namespace BigBangAPI.Controllers
                 return Conflict(new Response
                 {
                     Status = "Error",
-                    Message = "Email already exists."
+                    Message = "O e-mail já está em uso."
                 });
             }
 
@@ -245,7 +249,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new
                 {
                     Status = "Error",
-                    Message = "User creation failed.",
+                    Message = "Não foi possível criar o usuário.",
                     Errors = result.Errors.Select(e => e.Description)
                 });
             }
@@ -253,14 +257,15 @@ namespace BigBangAPI.Controllers
             return Ok(new Response
             {
                 Status = "Success",
-                Message = "User created successfully."
+                Message = "Usuário criado com sucesso."
             });
         }
 
         #endregion
 
-        #region Refresh Token
+        #region Renovação de token
 
+        /// <summary>Renova os tokens de acesso e de renovação.</summary>
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] TokenModel tokenModel)
         {
@@ -288,7 +293,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new Response
                 {
                     Status = "Error",
-                    Message = "Invalid access token or refresh token."
+                    Message = "Token de acesso ou de renovação inválido."
                 });
             }
 
@@ -326,8 +331,9 @@ namespace BigBangAPI.Controllers
 
         #endregion
 
-        #region Revoke
+        #region Revogação de token
 
+        /// <summary>Revoga o token de renovação do usuário.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPost("revoke/{username}")]
         public async Task<IActionResult> Revoke(string username)
@@ -339,7 +345,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new Response
                 {
                     Status = "Error",
-                    Message = "Invalid user name."
+                    Message = "Nome de usuário inválido."
                 });
             }
 

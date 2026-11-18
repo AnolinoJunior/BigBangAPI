@@ -45,7 +45,7 @@ function CharactersPage() {
 
         setCharacters([])
         setPagination(null)
-        setErrorMessage('Nao foi possivel carregar os personagens. Tente novamente.')
+        setErrorMessage('Não foi possível carregar os personagens. Tente novamente.')
       } finally {
         if (!ignoreResponse) setIsLoading(false)
       }
@@ -68,9 +68,9 @@ function CharactersPage() {
   return (
     <section className={styles.page} aria-labelledby="characters-title">
       <header className={styles.header}>
-        <p className={styles.eyebrow}>Catalogo</p>
-        <h1 id="characters-title">Characters</h1>
-        <p>Conheca os personagens cadastrados na Big Bang API.</p>
+        <p className={styles.eyebrow}>Catálogo</p>
+        <h1 id="characters-title">Personagens</h1>
+        <p>Conheça os personagens cadastrados na Big Bang API.</p>
       </header>
 
       <SearchBar onChange={handleSearchChange} onClear={() => handleSearchChange('')} value={searchTerm} />

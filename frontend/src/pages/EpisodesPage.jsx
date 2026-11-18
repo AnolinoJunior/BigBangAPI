@@ -62,7 +62,7 @@ function EpisodesPage() {
     <section className={styles.page} aria-labelledby="episodes-title">
       <header className={styles.header}>
         <p className={styles.eyebrow}>Catálogo</p>
-        <h1 id="episodes-title">Episodes</h1>
+        <h1 id="episodes-title">Episódios</h1>
         <p>Explore os episódios cadastrados na Big Bang API.</p>
       </header>
 
