@@ -8,6 +8,7 @@ namespace BigBangAPI.Controllers
     [Authorize(Policy = "AdminOnly")]
     public class UploadController : ControllerBase
     {
+        /// <summary>Envia uma imagem de personagem.</summary>
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile file)
         {

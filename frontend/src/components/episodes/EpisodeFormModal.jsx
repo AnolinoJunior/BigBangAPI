@@ -59,7 +59,7 @@ function EpisodeFormModal({ episode, errorMessage, isSaving, onCancel, onSave })
             <form onSubmit={handleSubmit}>
               <div className="modal-header">
                 <h2 className="modal-title fs-5" id="episode-form-title">
-                  {isEditing ? 'Editar Episode' : 'Novo Episode'}
+                  {isEditing ? 'Editar episódio' : 'Novo episódio'}
                 </h2>
                 <button aria-label="Fechar" className="btn-close" disabled={isSaving} onClick={onCancel} type="button" />
               </div>

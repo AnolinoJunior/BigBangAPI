@@ -7,19 +7,19 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Dependencies
+# Dependências
 node_modules
 
 # Build
 dist
 dist-ssr
 
-# Environment
+# Ambiente
 .env
 .env.*
 !.env.example
 
-# Local files
+# Arquivos locais
 *.local
 
 # Editor
@@ -27,7 +27,7 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 
-# OS
+# Sistema operacional
 .DS_Store
 
 # Visual Studio

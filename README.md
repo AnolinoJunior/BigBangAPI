@@ -3,12 +3,12 @@
 ![.NET](https://img.shields.io/badge/.NET-8-512BD4?logo=.net)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Banco%20de%20dados-CC2927?logo=microsoftsqlserver)
 ![Entity Framework Core](https://img.shields.io/badge/Entity%20Framework-Core-512BD4)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger)
-![License](https://img.shields.io/badge/License-MIT-success)
+![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-success)
 
-Uma **REST API** desenvolvida com **ASP.NET Core (.NET 8)** inspirada no universo da série **The Big Bang Theory**, acompanhada por um **frontend em React** para consumo da API.
+Uma **API REST** desenvolvida com **ASP.NET Core (.NET 8)** inspirada no universo da série **The Big Bang Theory**, acompanhada por um **frontend em React** para consumo da API.
 
 O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização em camadas e conceitos utilizados no desenvolvimento de aplicações modernas.
 ## ⚠️ Aviso
@@ -28,16 +28,16 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 ---
 
-# 📸 Preview
+# 📸 Prévia
 
 ## Frontend
 
-<img width="745" height="638" alt="image" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
+<img width="745" height="638" alt="Captura de tela do frontend" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
 
 
 ## Swagger
 
-<img width="911" height="652" alt="image" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
+<img width="911" height="652" alt="Captura de tela do Swagger" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
 
 
 ---
@@ -67,12 +67,12 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 - Paginação
 - JSON Patch
 - Middleware
-- Action Filters
-- Exception Filters
-- Logging Personalizado
-- Servir arquivos estáticos (wwwroot)
+- Filtros de ação
+- Filtros de exceção
+- Logs personalizados
+- Serviço de arquivos estáticos (`wwwroot`)
 - Swagger / OpenAPI
-- Seed de Dados
+- Carga inicial de dados
 
 ---
 
@@ -88,10 +88,10 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
                       │
          ┌────────────┴────────────┐
          ▼                         ▼
- Repository Pattern         Middleware
+ Padrão Repositório         Middleware
          │
          ▼
-     Unit of Work
+     Unidade de trabalho
          │
          ▼
  Entity Framework Core
@@ -128,7 +128,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 - GitHub
 - Visual Studio
 - VS Code
-- Somee Hosting
+- Hospedagem na Somee
 
 ---
 
@@ -136,23 +136,23 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 ### Arquitetura
 
-- REST API
-- Repository Pattern
-- Generic Repository
-- Unit of Work
-- Dependency Injection
+- API REST
+- Padrão Repositório
+- Repositório genérico
+- Unidade de trabalho
+- Injeção de dependência
 
 ### Persistência
 
 - Entity Framework Core
 - LINQ
 - SQL Server
-- Relacionamentos One-to-Many (1:N)
-- Relacionamentos Many-to-Many (N:N)
+- Relacionamentos de um para muitos (1:N)
+- Relacionamentos de muitos para muitos (N:N)
 
 ### API
 
-- DTO Pattern
+- Padrão DTO
 - AutoMapper
 - Paginação
 - JSON Patch
@@ -161,14 +161,14 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 ### Pipeline
 
 - Middleware
-- Action Filters
-- Exception Filters
+- Filtros de ação
+- Filtros de exceção
 - Tratamento Global de Exceções
 
-### Logging
+### Logs
 
 - ILogger
-- Custom Logger Provider
+- Provedor de logs personalizado
 - Logs em arquivo
 
 ### Frontend
@@ -246,7 +246,7 @@ Restaure as dependências:
 dotnet restore
 ```
 
-Execute as migrations:
+Aplique as migrações:
 
 ```bash
 dotnet ef database update
@@ -313,27 +313,27 @@ Este projeto foi desenvolvido para praticar:
 - Desenvolvimento de APIs REST
 - Entity Framework Core
 - Arquitetura em Camadas
-- Repository Pattern
-- Unit of Work
+- Padrão Repositório
+- Unidade de trabalho
 - AutoMapper
 - React consumindo APIs
 - Organização de código
 - Boas práticas de desenvolvimento
-- Deploy em ambiente real
+- Implantação em ambiente real
 
 ---
 
 # 🚀 Próximas melhorias
 
-- JWT Authentication
-- Refresh Token
+- Autenticação por JWT
+- Token de renovação
 - Versionamento da API
 - FluentValidation
 - Docker
-- Redis Cache
+- Cache com Redis
 - Testes Unitários
 - Testes de Integração
-- Health Checks
+- Verificações de integridade
 - CI/CD com GitHub Actions
 
 ---

@@ -2,10 +2,10 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 const navigationItems = [
-  { label: 'Dashboard', icon: '🏠', to: '/admin', end: true },
-  { label: 'Characters', icon: '👤', to: '/admin/characters' },
-  { label: 'Episodes', icon: '📺', to: '/admin/episodes' },
-  { label: 'Locations', icon: '📍', to: '/admin/locations' },
+  { label: 'Visão geral', icon: '🏠', to: '/admin', end: true },
+  { label: 'Personagens', icon: '👤', to: '/admin/characters' },
+  { label: 'Episódios', icon: '📺', to: '/admin/episodes' },
+  { label: 'Localizações', icon: '📍', to: '/admin/locations' },
 ]
 
 function AdminLayout() {
@@ -24,7 +24,7 @@ function AdminLayout() {
           <div className="card shadow-sm">
             <div className="card-body">
               <NavLink className="d-block h5 text-decoration-none mb-1" to="/admin">
-                Big Bang Admin
+                Administração da Big Bang API
               </NavLink>
               <p className="text-body-secondary small mb-4">
                 {user?.userName || 'Administrador'}
@@ -47,11 +47,11 @@ function AdminLayout() {
               <div className="d-grid gap-2 mt-4">
                 <Link className="btn btn-outline-secondary" to="/">
                   <span aria-hidden="true" className="me-2">🏡</span>
-                  Voltar ao Site
+                  Voltar ao site
                 </Link>
                 <button className="btn btn-outline-danger" onClick={handleLogout} type="button">
                   <span aria-hidden="true" className="me-2">🚪</span>
-                  Logout
+                  Sair
                 </button>
               </div>
             </div>

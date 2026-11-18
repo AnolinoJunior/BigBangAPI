@@ -23,6 +23,7 @@ namespace BigBangAPI.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>Lista as localizações.</summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LocationDTO>>> Get()
         {
@@ -35,6 +36,7 @@ namespace BigBangAPI.Controllers
             return Ok(locationsDto);
         }
 
+        /// <summary>Consulta uma localização pelo ID.</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<LocationDTO>> GetById(int id)
         {
@@ -44,7 +46,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"A localização com ID {id} não foi encontrada."
                 });
             }
 
@@ -53,6 +55,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Cadastra uma localização.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<LocationDTO>> Create([FromBody] LocationCreateDTO dto)
@@ -76,6 +79,7 @@ namespace BigBangAPI.Controllers
                 locationDto);
         }
 
+        /// <summary>Atualiza uma localização.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<ActionResult<LocationDTO>> Update(
@@ -93,7 +97,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"A localização com ID {id} não foi encontrada."
                 });
             }
 
@@ -108,6 +112,7 @@ namespace BigBangAPI.Controllers
             return Ok(locationDto);
         }
 
+        /// <summary>Exclui uma localização.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<LocationDTO>> Delete(int id)
@@ -118,7 +123,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"A localização com ID {id} não foi encontrada."
                 });
             }
 
@@ -131,6 +136,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Lista os personagens vinculados à localização.</summary>
         [HttpGet("{id:int:min(1)}/characters")]
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersByLocation(int id)
         {
@@ -140,7 +146,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No characters were found for location {id}."
+                    Message = $"Nenhum personagem encontrado para a localização {id}."
                 });
             }
 

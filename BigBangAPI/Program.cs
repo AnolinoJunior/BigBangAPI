@@ -7,8 +7,10 @@ using BigBangAPI.Logging;
 using BigBangAPI.Models;
 using BigBangAPI.Repositories;
 using BigBangAPI.Services;
+using BigBangAPI.Validations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -17,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-#region Connection String
+#region String de conexão
 
 var server = configuration["SqlServer:Server"];
 var database = configuration["SqlServer:Database"];
@@ -35,32 +37,78 @@ var connectionString = configuration.GetConnectionString("DefaultConnection")
 #region JWT
 
 var secretKey = configuration["JWT:SecretKey"]
-    ?? throw new ArgumentException("JWT SecretKey was not found.");
+    ?? throw new ArgumentException("A chave JWT:SecretKey não foi encontrada.");
 
 if (secretKey.Length < 32)
 {
     throw new InvalidOperationException(
-        "JWT SecretKey must contain at least 32 characters.");
+        "A chave JWT:SecretKey deve ter pelo menos 32 caracteres.");
 }
 
 #endregion
 
-#region Controllers
+#region Controladores
 
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiExceptionFilter>();
+
+    var messages = options.ModelBindingMessageProvider;
+    messages.SetMissingBindRequiredValueAccessor(field => $"Informe o campo '{field}'.");
+    messages.SetMissingKeyOrValueAccessor(() => "Informe um valor.");
+    messages.SetMissingRequestBodyRequiredValueAccessor(() => "Envie um corpo para a requisição.");
+    messages.SetValueMustNotBeNullAccessor(value => $"O valor '{value}' não é válido.");
+    messages.SetAttemptedValueIsInvalidAccessor((value, field) => $"O valor '{value}' não é válido para o campo '{field}'.");
+    messages.SetNonPropertyAttemptedValueIsInvalidAccessor(value => $"O valor '{value}' não é válido.");
+    messages.SetUnknownValueIsInvalidAccessor(field => $"O valor informado para o campo '{field}' não é válido.");
+    messages.SetNonPropertyUnknownValueIsInvalidAccessor(() => "O valor informado não é válido.");
+    messages.SetValueIsInvalidAccessor(value => $"O valor '{value}' não é válido.");
+    messages.SetValueMustBeANumberAccessor(field => $"O campo '{field}' deve conter um número.");
+    messages.SetNonPropertyValueMustBeANumberAccessor(() => "Informe um número.");
 })
 .AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler =
         ReferenceHandler.IgnoreCycles;
 })
-.AddNewtonsoftJson();
+.AddNewtonsoftJson(options => options.AllowInputFormatterExceptionMessages = false)
+.ConfigureApiBehaviorOptions(options =>
+{
+    var defaultResponseFactory = options.InvalidModelStateResponseFactory;
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var result = defaultResponseFactory(context);
+        if (result is ObjectResult { Value: ValidationProblemDetails details })
+        {
+            details.Title = "Um ou mais campos contêm erros de validação.";
+
+            foreach (var (field, errors) in details.Errors)
+            {
+                for (var index = 0; index < errors.Length; index++)
+                {
+                    errors[index] = errors[index] switch
+                    {
+                        "The input was not valid." => "O conteúdo enviado é inválido.",
+                        var message when message == $"The {field} field is required." => $"Informe o campo '{field}'.",
+                        _ => errors[index]
+                    };
+                }
+            }
+        }
+
+        return result;
+    };
+
+    options.ClientErrorMapping[400].Title = "Requisição inválida";
+    options.ClientErrorMapping[401].Title = "Autenticação necessária";
+    options.ClientErrorMapping[403].Title = "Acesso negado";
+    options.ClientErrorMapping[404].Title = "Recurso não encontrado";
+    options.ClientErrorMapping[415].Title = "Tipo de mídia não compatível";
+});
 
 #endregion
 
-#region Logging
+#region Logs
 
 builder.Logging.AddProvider(
     new CustomLoggerProvider(
@@ -72,7 +120,7 @@ builder.Logging.AddProvider(
 
 #endregion
 
-#region Database
+#region Banco de dados
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -85,11 +133,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
+    .AddErrorDescriber<PortugueseIdentityErrorDescriber>()
     .AddDefaultTokenProviders();
 
 #endregion
 
-#region Authentication
+#region Autenticação
 
 builder.Services
     .AddAuthentication(options =>
@@ -126,7 +175,7 @@ builder.Services
 
 #endregion
 
-#region Authorization
+#region Autorização
 
 builder.Services.AddAuthorization(options =>
 {
@@ -138,7 +187,7 @@ builder.Services.AddAuthorization(options =>
 
 #endregion
 
-#region Dependency Injection
+#region Injeção de dependência
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -168,17 +217,19 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "BigBangAPI.xml"));
+
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "BigBang API",
         Version = "v1",
-        Description = "API desenvolvida para gerenciamento do universo The Big Bang Theory."
+        Description = "Consulte e gerencie personagens, episódios e localizações de The Big Bang Theory."
     });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Description = "Informe: Bearer {seu_token}",
+        Description = "Autenticação por JWT. No Swagger UI, informe apenas o token. O cabeçalho da requisição usa o formato Bearer {seu_token}.",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
@@ -221,12 +272,16 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-#region Pipeline
+#region Pipeline HTTP
 
 app.ConfigureExceptionHandler();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.DocumentTitle = "Documentação da BigBang API";
+    options.SwaggerEndpoint("v1/swagger.json", "BigBang API v1");
+});
 
 app.UseHttpsRedirection();
 

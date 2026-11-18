@@ -23,6 +23,7 @@ namespace BigBangAPI.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>Cadastra um episódio.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<EpisodeDTO>> Create([FromBody] EpisodeCreateDTO dto)
@@ -46,6 +47,7 @@ namespace BigBangAPI.Controllers
                 episodeDto);
         }
 
+        /// <summary>Lista os episódios com paginação.</summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EpisodeDTO>>> Get(
             [FromQuery] EpisodeParameters episodeParams)
@@ -56,7 +58,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = "No episodes found."
+                    Message = "Nenhum episódio encontrado."
                 });
             }
 
@@ -65,6 +67,7 @@ namespace BigBangAPI.Controllers
             return Ok(episodesDto);
         }
 
+        /// <summary>Consulta um episódio pelo ID.</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<EpisodeDTO>> GetById(int id)
         {
@@ -74,7 +77,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"O episódio com ID {id} não foi encontrado."
                 });
             }
 
@@ -83,6 +86,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Atualiza um episódio.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<ActionResult<EpisodeDTO>> Update(
@@ -100,7 +104,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"O episódio com ID {id} não foi encontrado."
                 });
             }
 
@@ -115,6 +119,7 @@ namespace BigBangAPI.Controllers
             return Ok(episodeDto);
         }
 
+        /// <summary>Exclui um episódio.</summary>
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<EpisodeDTO>> Delete(int id)
@@ -125,7 +130,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"O episódio com ID {id} não foi encontrado."
                 });
             }
 
@@ -138,6 +143,7 @@ namespace BigBangAPI.Controllers
             return Ok(dto);
         }
 
+        /// <summary>Lista os personagens que aparecem no episódio.</summary>
         [HttpGet("{id:int:min(1)}/characters")]
         public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersByEpisode(int id)
         {
@@ -147,7 +153,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No characters were found for episode {id}."
+                    Message = $"Nenhum personagem encontrado para o episódio {id}."
                 });
             }
 
