@@ -1,3 +1,4 @@
+﻿
 import api from './api'
 
 export async function getCharacters({ pageNumber = 1, pageSize = 5, name = '' } = {}) {
@@ -33,7 +34,7 @@ export function getCharacterImageUrl(imageUrl) {
   }
 
   const imageFileName = imageUrl.replace(/^\/?(?:images\/characters\/)?/i, '')
-  const apiBaseUrl = new URL(api.defaults.baseURL, window.location.origin)
 
-  return new URL(`/images/characters/${imageFileName}`, apiBaseUrl).toString()
+  return `https://bigbangapi.onrender.com/Images/characters/${imageFileName}`
 }
+
