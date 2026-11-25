@@ -12,15 +12,15 @@ function Pagination({
   const canGoToNextPage = hasNextPage && !isLoading
 
   return (
-    <nav className={styles.pagination} aria-label="Paginacao de personagens">
+    <nav className={styles.pagination} aria-label="Paginação de personagens">
       <button className={styles.button} disabled={!canGoToPreviousPage} onClick={() => onPageChange(currentPage - 1)} type="button">
         Anterior
       </button>
       <span className={styles.currentPage} aria-live="polite">
-        Pagina {currentPage}{totalPages ? ` de ${totalPages}` : ''}
+        Página {currentPage}{totalPages ? ` de ${totalPages}` : ''}
       </span>
       <button className={styles.button} disabled={!canGoToNextPage} onClick={() => onPageChange(currentPage + 1)} type="button">
-        Proxima
+        Próxima
       </button>
     </nav>
   )

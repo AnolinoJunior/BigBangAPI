@@ -48,21 +48,21 @@ Crie um serviço Web a partir do repositório e escolha **Docker**. O Dockerfile
 | `Cors__AllowedOrigins` | Origem pública do frontend, por exemplo `https://www.seudominio.com` |
 | `AutoMapper__LicenseKey` | Chave da licença, se aplicável ao uso do AutoMapper |
 
-ASP.NET Core converte `__` em `:`. Não coloque senha, connection string, JWT secret ou licença no repositório. O Render encaminha tráfego HTTPS ao container; ele escuta HTTP em `0.0.0.0:10000`, usando `ASPNETCORE_URLS`. O health check inicial pode usar `/swagger`.
+ASP.NET Core converte `__` em `:`. Não coloque senha, cadeia de conexão, chave secreta JWT ou licença no repositório. O Render encaminha tráfego HTTPS ao container; ele escuta HTTP em `0.0.0.0:10000`, usando `ASPNETCORE_URLS`. A verificação inicial de disponibilidade pode usar `/swagger`.
 
 Confirme no painel da Somee que o SQL Server permite conexões de saída originadas do Render e que as regras de firewall/allowlist e criptografia da connection string estão adequadas. Não habilite acesso amplo ao banco como atalho. Esse ajuste de rede depende da configuração da conta Somee.
 
-## Deploy do backend
+## Publicação do backend
 
 1. Envie os arquivos versionados ao GitHub.
-2. No Render, crie **New + → Web Service**, conecte o repositório e selecione Docker.
+2. No Render, crie **New + → Web Service** (serviço Web), conecte o repositório e selecione Docker.
 3. Mantenha o Dockerfile na raiz e cadastre as variáveis acima.
 4. Faça o deploy e copie a URL pública HTTPS do serviço.
 5. Consulte `https://SUA-API.onrender.com/swagger` e valide uma rota que leia dados SQL.
 
 O container publica apenas `BigBangAPI`; não inclui nem serve o frontend. Migrations existentes e banco Somee permanecem como estão.
 
-## Build e publicação do React na Somee
+## Geração e publicação dos arquivos React na Somee
 
 Na pasta `frontend`, crie `.env.production` (arquivo local, não versionado) com a URL pública real da API:
 
@@ -77,7 +77,7 @@ npm install
 npm run build
 ```
 
-Envie **o conteúdo** de `frontend/dist/` pelo File Manager da Somee para a pasta pública do site (normalmente `wwwroot`), preservando a estrutura de diretórios e substituindo os arquivos antigos da versão do frontend. Envie `index.html`, `assets/` e demais arquivos gerados; não envie a pasta `dist` como subpasta aninhada. Configure o host para que rotas SPA do React direcionem para `index.html`, conforme o mecanismo disponível na hospedagem Somee.
+Envie **o conteúdo** de `frontend/dist/` pelo Gerenciador de arquivos (File Manager) da Somee para a pasta pública do site (normalmente `wwwroot`), preservando a estrutura de diretórios e substituindo os arquivos antigos da versão do frontend. Envie `index.html`, `assets/` e demais arquivos gerados; não envie a pasta `dist` como subpasta aninhada. Configure o host para que rotas SPA do React direcionem para `index.html`, conforme o mecanismo disponível na hospedagem Somee.
 
 Variáveis `VITE_*` são incorporadas na build e são públicas; nunca coloque segredos nelas. Para mudar URL ou domínio, gere e publique nova build.
 
@@ -87,7 +87,7 @@ No Render, `Cors__AllowedOrigins` recebe a origem exata do frontend, incluindo e
 
 1. Abra Swagger da API e confirme que carrega via HTTPS.
 2. Confira se uma rota pública consegue ler registros do SQL Server da Somee; teste também autenticação/JWT quando aplicável.
-3. Abra o frontend publicado, confira Network/Console do navegador para erros de CORS e respostas da API, e teste listagem/imagens/login conforme aplicável.
+3. Abra o frontend publicado, confira as abas Rede/Console do navegador para erros de CORS e respostas da API, e teste listagem, imagens e login conforme aplicável.
 4. Confirme no SQL Server que os dados são os da base atual, sem alterar schema.
 
 Se a API não conectar ao SQL Server, revise a connection string e as permissões de rede no painel Somee. Se o navegador mostrar CORS, confirme que `Cors__AllowedOrigins` corresponde exatamente à origem da barra de endereço e faça redeploy/reinicialização do serviço.

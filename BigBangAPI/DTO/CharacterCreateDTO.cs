@@ -5,14 +5,14 @@ namespace BigBangAPI.DTO;
 
 public class CharacterCreateDTO
 {
-    [Required]
-    [StringLength(50)]
+    [Required(ErrorMessage = "O nome é obrigatório.")]
+    [StringLength(50, ErrorMessage = "O nome não pode ter mais de 50 caracteres.")]
     public string Name { get; set; } = string.Empty;
 
-    [Required]
+    [Required(ErrorMessage = "O nome do ator é obrigatório.")]
     public string Actor { get; set; } = string.Empty;
 
-    [Required]
+    [Required(ErrorMessage = "A ocupação é obrigatória.")]
     public string Occupation { get; set; } = string.Empty;
 
     public string University { get; set; } = string.Empty;

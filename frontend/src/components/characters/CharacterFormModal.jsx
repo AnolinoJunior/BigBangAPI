@@ -114,7 +114,7 @@ function CharacterFormModal({ character, errorMessage, isSaving, isUploading, lo
             <form onSubmit={handleSubmit}>
               <div className="modal-header">
                 <h2 className="modal-title fs-5" id="character-form-title">
-                  {isEditing ? 'Editar Character' : 'Novo Character'}
+                  {isEditing ? 'Editar personagem' : 'Novo personagem'}
                 </h2>
                 <button aria-label="Fechar" className="btn-close" disabled={isBusy} onClick={onCancel} type="button" />
               </div>
@@ -158,7 +158,7 @@ function CharacterFormModal({ character, errorMessage, isSaving, isUploading, lo
                     <input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" className="form-control" disabled={isBusy} id="character-image" onChange={handleImageChange} type="file" />
                     <div className="form-text">Formatos aceitos: JPG, JPEG, PNG e WEBP.</div>
                     {displayedImageUrl && (
-                      <img alt="Preview do character" className="img-thumbnail mt-3" height="160" src={displayedImageUrl} style={{ objectFit: 'cover', width: '160px' }} />
+                      <img alt="Prévia do personagem" className="img-thumbnail mt-3" height="160" src={displayedImageUrl} style={{ objectFit: 'cover', width: '160px' }} />
                     )}
                   </div>
                 </div>

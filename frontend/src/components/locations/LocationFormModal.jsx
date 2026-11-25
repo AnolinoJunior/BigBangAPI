@@ -32,7 +32,7 @@ function LocationFormModal({ errorMessage, isSaving, location, onCancel, onSave 
             <form onSubmit={handleSubmit}>
               <div className="modal-header">
                 <h2 className="modal-title fs-5" id="location-form-title">
-                  {isEditing ? 'Editar Location' : 'Nova Location'}
+                  {isEditing ? 'Editar localização' : 'Nova localização'}
                 </h2>
                 <button aria-label="Fechar" className="btn-close" disabled={isSaving} onClick={onCancel} type="button" />
               </div>

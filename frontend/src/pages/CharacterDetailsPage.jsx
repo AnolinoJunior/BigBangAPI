@@ -103,7 +103,7 @@ function CharacterDetailsPage() {
         <h1 id="not-found-title">Personagem não encontrado</h1>
         <p>O personagem solicitado não está disponível na Big Bang API.</p>
         <Link className={styles.backLink} to="/characters">
-          Voltar para Characters
+          Voltar para personagens
         </Link>
       </section>
     )
@@ -116,7 +116,7 @@ function CharacterDetailsPage() {
         <h1 id="error-title">Não foi possível carregar o personagem</h1>
         <p>{errorMessage}</p>
         <Link className={styles.backLink} to="/characters">
-          Voltar para Characters
+          Voltar para personagens
         </Link>
       </section>
     )
@@ -128,14 +128,14 @@ function CharacterDetailsPage() {
     { label: 'Ocupação', value: character.occupation },
     { label: 'Universidade', value: character.university || 'Não informada' },
     { label: 'Idade', value: `${character.age} anos` },
-    { label: 'IQ', value: character.iq },
+    { label: 'QI', value: character.iq },
     { label: 'Localização', value: character.locationName || 'Não informada' },
   ]
 
   return (
     <section className={styles.page} aria-labelledby="character-name">
       <Link className={styles.backLink} to="/characters">
-        ← Voltar para Characters
+        ← Voltar para personagens
       </Link>
 
       <div className={styles.profile}>

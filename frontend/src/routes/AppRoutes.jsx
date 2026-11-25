@@ -37,7 +37,7 @@ function AppRoutes() {
         <Route path="episodes/season/:seasonNumber" element={<SeasonEpisodesPage />} />
         <Route
           path="locations"
-          element={<ResourcePlaceholderPage resourceName="Locations" />}
+          element={<ResourcePlaceholderPage resourceName="Localizações" />}
         />
         <Route path="*" element={<HomePage />} />
       </Route>

@@ -1,4 +1,4 @@
-# 🚀 The Big Bang Theory API
+# 🚀 API de The Big Bang Theory
 
 ![.NET](https://img.shields.io/badge/.NET-8-512BD4?logo=.net)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4)
@@ -6,9 +6,9 @@
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver)
 ![Entity Framework Core](https://img.shields.io/badge/Entity%20Framework-Core-512BD4)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger)
-![License](https://img.shields.io/badge/License-MIT-success)
+![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-success)
 
-Uma **REST API** desenvolvida com **ASP.NET Core (.NET 8)** inspirada no universo da série **The Big Bang Theory**, acompanhada por um **frontend em React** para consumo da API.
+Uma **API REST** desenvolvida com **ASP.NET Core (.NET 8)**, inspirada no universo da série **The Big Bang Theory** e acompanhada por uma aplicação web em React.
 
 O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização em camadas e conceitos utilizados no desenvolvimento de aplicações modernas.
 ## ⚠️ Aviso
@@ -20,7 +20,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 # 🌐 Demonstração
 
-| Aplicação | Link |
+| Aplicação | Endereço |
 |------------|------|
 | API | https://bigbangapi.somee.com |
 | Swagger | https://bigbangapi.somee.com/swagger |
@@ -28,16 +28,16 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 ---
 
-# 📸 Preview
+# 📸 Prévia
 
-## Frontend
+## Interface web
 
-<img width="745" height="638" alt="image" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
+<img width="745" height="638" alt="Captura de tela da interface web" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
 
 
 ## Swagger
 
-<img width="911" height="652" alt="image" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
+<img width="911" height="652" alt="Captura de tela do Swagger" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
 
 
 ---
@@ -47,7 +47,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 ### 👥 Personagens
 
 - CRUD completo
-- Consulta por ID
+- Consulta por identificador
 - Paginação
 - Imagens dinâmicas
 - Página de detalhes
@@ -62,17 +62,17 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 ### ⚙ Recursos
 
-- DTOs
+- DTOs (objetos de transferência de dados)
 - AutoMapper
 - Paginação
 - JSON Patch
 - Middleware
-- Action Filters
-- Exception Filters
-- Logging Personalizado
-- Servir arquivos estáticos (wwwroot)
+- Filtros de ação
+- Filtros de exceção
+- Registro personalizado de eventos
+- Servir arquivos estáticos (`wwwroot`)
 - Swagger / OpenAPI
-- Seed de Dados
+- Carga inicial de dados
 
 ---
 
@@ -88,10 +88,10 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
                       │
          ┌────────────┴────────────┐
          ▼                         ▼
- Repository Pattern         Middleware
+ Padrão Repository         Middleware
          │
          ▼
-     Unit of Work
+     Unidade de trabalho
          │
          ▼
  Entity Framework Core
@@ -104,7 +104,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 # 🛠 Tecnologias
 
-## Backend
+## Servidor
 
 - ASP.NET Core 8
 - C#
@@ -114,7 +114,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 - Swagger / OpenAPI
 - JSON Patch
 
-## Frontend
+## Aplicação web
 
 - React
 - Vite
@@ -128,31 +128,31 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 - GitHub
 - Visual Studio
 - VS Code
-- Somee Hosting
+- Hospedagem Somee
 
 ---
 
-# 📚 Conceitos Aplicados
+# 📚 Conceitos aplicados
 
 ### Arquitetura
 
-- REST API
-- Repository Pattern
-- Generic Repository
-- Unit of Work
-- Dependency Injection
+- API REST
+- Padrão de repositório
+- Repositório genérico
+- Unidade de trabalho
+- Injeção de dependência
 
 ### Persistência
 
 - Entity Framework Core
 - LINQ
 - SQL Server
-- Relacionamentos One-to-Many (1:N)
-- Relacionamentos Many-to-Many (N:N)
+- Relacionamentos um para muitos (1:N)
+- Relacionamentos muitos para muitos (N:N)
 
 ### API
 
-- DTO Pattern
+- Padrão DTO
 - AutoMapper
 - Paginação
 - JSON Patch
@@ -165,13 +165,13 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 - Exception Filters
 - Tratamento Global de Exceções
 
-### Logging
+### Registro de eventos
 
 - ILogger
-- Custom Logger Provider
-- Logs em arquivo
+- Provedor de registro personalizado
+- Registros em arquivo
 
-### Frontend
+### Aplicação web
 
 - React
 - Axios
@@ -181,7 +181,7 @@ A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem 
 
 ---
 
-# 📂 Estrutura do Projeto
+# 📂 Estrutura do projeto
 
 ```text
 Projeto-BigBangAPI
@@ -226,7 +226,7 @@ Projeto-BigBangAPI
 
 # ⚙ Como executar
 
-## Backend
+## Servidor
 
 Clone o repositório:
 
@@ -246,7 +246,7 @@ Restaure as dependências:
 dotnet restore
 ```
 
-Execute as migrations:
+Para atualizar manualmente o banco de desenvolvimento, execute as migrations:
 
 ```bash
 dotnet ef database update
@@ -272,7 +272,7 @@ http://localhost:5004/swagger
 
 ---
 
-## Frontend
+## Aplicação web
 
 Entre na pasta:
 
@@ -298,7 +298,7 @@ Execute:
 npm run dev
 ```
 
-Frontend:
+Aplicação web:
 
 ```text
 http://localhost:5173
@@ -313,27 +313,27 @@ Este projeto foi desenvolvido para praticar:
 - Desenvolvimento de APIs REST
 - Entity Framework Core
 - Arquitetura em Camadas
-- Repository Pattern
-- Unit of Work
+- Padrão de repositório
+- Unidade de trabalho
 - AutoMapper
 - React consumindo APIs
 - Organização de código
 - Boas práticas de desenvolvimento
-- Deploy em ambiente real
+- Publicação em ambiente real
 
 ---
 
 # 🚀 Próximas melhorias
 
-- JWT Authentication
-- Refresh Token
+- Autenticação JWT
+- Token de atualização
 - Versionamento da API
 - FluentValidation
 - Docker
 - Redis Cache
-- Testes Unitários
-- Testes de Integração
-- Health Checks
+- Testes unitários
+- Testes de integração
+- Verificações de disponibilidade
 - CI/CD com GitHub Actions
 
 ---
