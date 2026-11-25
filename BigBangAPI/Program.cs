@@ -32,7 +32,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
         string.IsNullOrWhiteSpace(database))
     {
         throw new InvalidOperationException(
-            "Connection string DefaultConnection was not configured.");
+            "A cadeia de conexão DefaultConnection não foi configurada.");
     }
 
     connectionString = $"Server={server};" +
@@ -46,12 +46,12 @@ if (string.IsNullOrWhiteSpace(connectionString))
 #region JWT
 
 var secretKey = configuration["JWT:SecretKey"]
-    ?? throw new ArgumentException("JWT SecretKey was not found.");
+    ?? throw new ArgumentException("A chave JWT:SecretKey não foi configurada.");
 
 if (secretKey.Length < 32)
 {
     throw new InvalidOperationException(
-        "JWT SecretKey must contain at least 32 characters.");
+        "A chave JWT:SecretKey deve conter pelo menos 32 caracteres.");
 }
 
 #endregion
@@ -95,6 +95,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 #region Identity
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddErrorDescriber<BigBangAPI.Localization.DescritorDeErrosIdentityPtBr>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
@@ -181,9 +182,9 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "BigBang API",
+        Title = "Big Bang API",
         Version = "v1",
-        Description = "API desenvolvida para gerenciamento do universo The Big Bang Theory."
+        Description = "API para gerenciamento de personagens, episódios e localizações do universo The Big Bang Theory."
     });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -243,7 +244,11 @@ var app = builder.Build();
 app.ConfigureExceptionHandler();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.DocumentTitle = "Documentação da API Big Bang";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Big Bang API v1");
+});
 
 app.UseStaticFiles();
 

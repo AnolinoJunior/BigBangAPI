@@ -13,13 +13,13 @@ namespace BigBangAPI.Services
             IConfiguration configuration)
         {
             var secretKey = configuration["JWT:SecretKey"]
-                ?? throw new InvalidOperationException("JWT:SecretKey não encontrada.");
+                ?? throw new InvalidOperationException("A configuração JWT:SecretKey não foi encontrada.");
 
             var issuer = configuration["JWT:ValidIssuer"]
-                ?? throw new InvalidOperationException("JWT:ValidIssuer não encontrado.");
+                ?? throw new InvalidOperationException("A configuração JWT:ValidIssuer não foi encontrada.");
 
             var audience = configuration["JWT:ValidAudience"]
-                ?? throw new InvalidOperationException("JWT:ValidAudience não encontrado.");
+                ?? throw new InvalidOperationException("A configuração JWT:ValidAudience não foi encontrada.");
 
             var expiration = configuration.GetValue<double>("JWT:TokenValidityInMinutes");
 
@@ -61,7 +61,7 @@ namespace BigBangAPI.Services
             IConfiguration configuration)
         {
             var secretKey = configuration["JWT:SecretKey"]
-                ?? throw new InvalidOperationException("JWT:SecretKey não encontrada.");
+                ?? throw new InvalidOperationException("A configuração JWT:SecretKey não foi encontrada.");
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -86,7 +86,7 @@ namespace BigBangAPI.Services
                     SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new SecurityTokenException("Token inválido.");
+                throw new SecurityTokenException("O token é inválido.");
             }
 
             return principal;

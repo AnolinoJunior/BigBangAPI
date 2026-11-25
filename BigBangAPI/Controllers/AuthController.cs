@@ -49,7 +49,7 @@ namespace BigBangAPI.Controllers
                         new Response
                         {
                             Status = "Success",
-                            Message = $"Role '{roleName}' added successfully."
+                            Message = $"A função '{roleName}' foi criada com sucesso."
                         });
                 }
                 else
@@ -58,7 +58,7 @@ namespace BigBangAPI.Controllers
                         new Response
                         {
                             Status = "Error",
-                            Message = $"Issue adding the new '{roleName}' role."
+                            Message = $"Não foi possível criar a função '{roleName}'."
                         });
                 }
             }
@@ -67,7 +67,7 @@ namespace BigBangAPI.Controllers
                 new Response
                 {
                     Status = "Error",
-                    Message = "Role already exists."
+                    Message = "Essa função já existe."
                 });
         }
             [Authorize(Policy = "AdminOnly")]
@@ -87,7 +87,7 @@ namespace BigBangAPI.Controllers
                             new Response
                             {
                                 Status = "Success",
-                                Message = $"User {user.Email} added to the {roleName} role."
+                                Message = $"O usuário {user.Email} foi adicionado à função {roleName}."
                             });
                     }
                     else
@@ -96,14 +96,14 @@ namespace BigBangAPI.Controllers
                             new Response
                             {
                                 Status = "Error",
-                                Message = $"Error: Unable to add user {user.Email} to the {roleName} role."
+                                Message = $"Não foi possível adicionar o usuário {user.Email} à função {roleName}."
                             });
                     }
                 }
 
                 return BadRequest(new
                 {
-                    Error = "Unable to find user."
+                    Error = "Não foi possível localizar o usuário."
                 });
             }
         
@@ -127,7 +127,7 @@ namespace BigBangAPI.Controllers
                     return Unauthorized(new Response
                     {
                         Status = "Error",
-                        Message = "Invalid username or password."
+                        Message = "Nome de usuário ou senha inválidos."
                     });
                 }
 
@@ -172,7 +172,7 @@ namespace BigBangAPI.Controllers
                     return BadRequest(new
                     {
                         Status = "Error",
-                        Message = "Unable to update user.",
+                        Message = "Não foi possível atualizar o usuário.",
                         Errors = updateResult.Errors.Select(e => e.Description)
                     });
                 }
@@ -191,7 +191,7 @@ namespace BigBangAPI.Controllers
             {
                 return StatusCode(500, new
                 {
-                    Message = "An unexpected error occurred while processing the login request."
+                    Message = "Ocorreu um erro inesperado ao processar a solicitação de entrada."
                 });
             }
         }
@@ -214,7 +214,7 @@ namespace BigBangAPI.Controllers
                 return Conflict(new Response
                 {
                     Status = "Error",
-                    Message = "User already exists."
+                    Message = "Esse usuário já existe."
                 });
             }
 
@@ -226,7 +226,7 @@ namespace BigBangAPI.Controllers
                 return Conflict(new Response
                 {
                     Status = "Error",
-                    Message = "Email already exists."
+                    Message = "Esse e-mail já está cadastrado."
                 });
             }
 
@@ -245,7 +245,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new
                 {
                     Status = "Error",
-                    Message = "User creation failed.",
+                    Message = "Não foi possível criar o usuário.",
                     Errors = result.Errors.Select(e => e.Description)
                 });
             }
@@ -253,7 +253,7 @@ namespace BigBangAPI.Controllers
             return Ok(new Response
             {
                 Status = "Success",
-                Message = "User created successfully."
+                Message = "Usuário criado com sucesso."
             });
         }
 
@@ -288,7 +288,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new Response
                 {
                     Status = "Error",
-                    Message = "Invalid access token or refresh token."
+                    Message = "Token de acesso ou token de atualização inválido."
                 });
             }
 
@@ -339,7 +339,7 @@ namespace BigBangAPI.Controllers
                 return BadRequest(new Response
                 {
                     Status = "Error",
-                    Message = "Invalid user name."
+                    Message = "Nome de usuário inválido."
                 });
             }
 

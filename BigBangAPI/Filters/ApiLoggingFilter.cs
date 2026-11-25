@@ -13,19 +13,19 @@ public class ApiLoggingFilter : IActionFilter
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
-          _logger.LogInformation("### Executando -> OnActionExecuting");
+          _logger.LogInformation("### Executando -> início da ação");
     _logger.LogInformation("############################################");
     _logger.LogInformation($"{DateTime.Now.ToLongTimeString()}");
-    _logger.LogInformation($"ModelState : {context.ModelState.IsValid}");
+    _logger.LogInformation($"Estado de validação do modelo: {context.ModelState.IsValid}");
     _logger.LogInformation("############################################");
     }
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        _logger.LogInformation("### Executando -> OnActionExecuted");
+        _logger.LogInformation("### Executando -> fim da ação");
     _logger.LogInformation("############################################");
     _logger.LogInformation($"{DateTime.Now.ToLongTimeString()}");
-    _logger.LogInformation($"Status Code : {context.HttpContext.Response.StatusCode}");
+    _logger.LogInformation($"Código de status: {context.HttpContext.Response.StatusCode}");
     _logger.LogInformation("############################################");
     }
 }

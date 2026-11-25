@@ -3,17 +3,17 @@ import styles from './HomePage.module.css'
 
 const resources = [
   {
-    title: 'Characters',
+    title: 'Personagens',
     description: 'Conheça os personagens e os detalhes de cada um.',
     to: '/characters',
   },
   {
-    title: 'Episodes',
+    title: 'Episódios',
     description: 'Explore os episódios por temporada e número.',
     to: '/episodes',
   },
   {
-    title: 'Locations',
+    title: 'Localizações',
     description: 'Veja os locais e os personagens que vivem neles.',
     to: '/locations',
   },

@@ -1,16 +1,34 @@
-# React + Vite
+# Aplicação React da Big Bang API
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Frontend em React e Vite para consultar e administrar personagens, episódios e localizações.
 
-Currently, two official plugins are available:
+## Executar em desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Instale o Node.js e, nesta pasta, execute:
 
-## React Compiler
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Crie um arquivo `.env` usando `.env.example` e configure a URL base da API:
 
-## Expanding the Oxlint configuration
+```env
+VITE_API_BASE_URL=http://localhost:5004/api
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+## Verificar e gerar os arquivos de publicação
+
+```bash
+npm run lint
+npm run build
+```
+
+A compilação de produção é gerada na pasta `dist/`. Para publicar na Somee, envie o conteúdo dessa pasta para a pasta pública do site. Configure `VITE_API_BASE_URL` com a URL pública da API antes de gerar a compilação. Consulte o [guia de publicação](../DEPLOY.md).
+
+Os valores iniciados por `VITE_` ficam públicos no navegador; não os utilize para guardar senhas ou tokens secretos.

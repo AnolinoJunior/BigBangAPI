@@ -44,7 +44,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"Localização com identificador {id} não encontrada."
                 });
             }
 
@@ -93,7 +93,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"Localização com identificador {id} não encontrada."
                 });
             }
 
@@ -118,7 +118,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Location with ID {id} was not found."
+                    Message = $"Localização com identificador {id} não encontrada."
                 });
             }
 
@@ -140,7 +140,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No characters were found for location {id}."
+                    Message = $"Nenhum personagem foi encontrado para a localização {id}."
                 });
             }
 

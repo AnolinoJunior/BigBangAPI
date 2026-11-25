@@ -42,7 +42,7 @@ function AdminLocationsPage() {
         }
       } catch (error) {
         if (!ignoreResponse) {
-          setErrorMessage(getApiMessage(error, 'Não foi possível carregar as locations.'))
+          setErrorMessage(getApiMessage(error, 'Não foi possível carregar as localizações.'))
         }
       } finally {
         if (!ignoreResponse) setIsLoading(false)
@@ -64,7 +64,7 @@ function AdminLocationsPage() {
       setFormLocation(location)
       setIsFormOpen(true)
     } catch (error) {
-      setErrorMessage(getApiMessage(error, 'Não foi possível carregar a location para edição.'))
+      setErrorMessage(getApiMessage(error, 'Não foi possível carregar a localização para edição.'))
     } finally {
       setIsLoadingForm(false)
     }
@@ -85,17 +85,17 @@ function AdminLocationsPage() {
     try {
       if (formLocation) {
         await updateLocation(formLocation.id, locationData)
-        setSuccessMessage('Location atualizada com sucesso.')
+        setSuccessMessage('Localização atualizada com sucesso.')
       } else {
         await createLocation(locationData)
-        setSuccessMessage('Location criada com sucesso.')
+        setSuccessMessage('Localização criada com sucesso.')
       }
 
       setIsFormOpen(false)
       setFormLocation(null)
       setReloadKey((key) => key + 1)
     } catch (error) {
-      setFormError(getApiMessage(error, 'Não foi possível salvar a location.'))
+      setFormError(getApiMessage(error, 'Não foi possível salvar a localização.'))
     } finally {
       setIsSaving(false)
     }
@@ -109,11 +109,11 @@ function AdminLocationsPage() {
 
     try {
       await deleteLocation(locationToDelete.id)
-      setSuccessMessage('Location excluída com sucesso.')
+      setSuccessMessage('Localização excluída com sucesso.')
       setLocationToDelete(null)
       setReloadKey((key) => key + 1)
     } catch (error) {
-      setErrorMessage(getApiMessage(error, 'Não foi possível excluir a location.'))
+      setErrorMessage(getApiMessage(error, 'Não foi possível excluir a localização.'))
       setLocationToDelete(null)
     } finally {
       setIsDeleting(false)
@@ -124,21 +124,21 @@ function AdminLocationsPage() {
     <section>
       <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-          <h1 className="h3 mb-1">Locations Administration</h1>
-          <p className="text-body-secondary mb-0">Gerencie as locations cadastradas na API.</p>
+          <h1 className="h3 mb-1">Administração de localizações</h1>
+          <p className="text-body-secondary mb-0">Gerencie as localizações cadastradas na API.</p>
         </div>
         <button className="btn btn-primary" disabled={isLoadingForm} onClick={openCreateForm} type="button">
-          {isLoadingForm ? 'Carregando...' : 'Nova Location'}
+          {isLoadingForm ? 'Carregando...' : 'Nova localização'}
         </button>
       </div>
 
       {successMessage && <div className="alert alert-success" role="status">{successMessage}</div>}
       {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
 
-      {isLoading && <div className="text-center py-5"><div aria-label="Carregando locations" className="spinner-border" role="status" /></div>}
+      {isLoading && <div className="text-center py-5"><div aria-label="Carregando localizações" className="spinner-border" role="status" /></div>}
 
       {!isLoading && !errorMessage && locations.length === 0 && (
-        <div className="alert alert-info mb-0">Nenhuma location foi encontrada.</div>
+        <div className="alert alert-info mb-0">Nenhuma localização foi encontrada.</div>
       )}
 
       {!isLoading && locations.length > 0 && (
@@ -168,7 +168,7 @@ function AdminLocationsPage() {
       )}
 
       {isFormOpen && <LocationFormModal errorMessage={formError} isSaving={isSaving} location={formLocation} onCancel={() => setIsFormOpen(false)} onSave={handleSave} />}
-      {locationToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${locationToDelete.name}? Esta ação não pode ser desfeita.`} onCancel={() => setLocationToDelete(null)} onConfirm={handleDelete} title="Excluir Location" />}
+      {locationToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${locationToDelete.name}? Esta ação não pode ser desfeita.`} onCancel={() => setLocationToDelete(null)} onConfirm={handleDelete} title="Excluir localização" />}
     </section>
   )
 }

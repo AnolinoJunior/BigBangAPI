@@ -35,12 +35,12 @@ namespace BigBangAPI.Controllers
         {
             if (dto is null)
             {
-                _logger.LogWarning("Create request received with a null character.");
+                _logger.LogWarning("Solicitação de criação recebida sem dados do personagem.");
                 return BadRequest();
             }
 
             _logger.LogInformation(
-                "Creating a new character: {CharacterName}",
+                "Criando um novo personagem: {CharacterName}",
                 dto.Name);
 
             var character = _mapper.Map<Character>(dto);
@@ -68,7 +68,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = "No characters found."
+                    Message = "Nenhum personagem foi encontrado."
                 });
             }
 
@@ -100,7 +100,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"Personagem com identificador {id} não encontrado."
                 });
             }
 
@@ -117,7 +117,7 @@ namespace BigBangAPI.Controllers
         {
             if (id != dto.Id)
             {
-                _logger.LogWarning("Update request received with mismatched ID.");
+                _logger.LogWarning("Solicitação de atualização recebida com identificadores divergentes.");
                 return BadRequest();
             }
 
@@ -127,7 +127,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"Personagem com identificador {id} não encontrado."
                 });
             }
 
@@ -151,12 +151,12 @@ namespace BigBangAPI.Controllers
             if (character == null)
             {
                 _logger.LogWarning(
-                    "Delete request received for non-existent character with ID: {CharacterId}",
+                    "Solicitação de exclusão recebida para personagem inexistente com identificador: {CharacterId}",
                     id);
 
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"Personagem com identificador {id} não encontrado."
                 });
             }
 
@@ -178,7 +178,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No episodes were found for character {id}."
+                    Message = $"Nenhum episódio foi encontrado para o personagem {id}."
                 });
             }
 
@@ -204,7 +204,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Character with ID {id} was not found."
+                    Message = $"Personagem com identificador {id} não encontrado."
                 });
             }
 

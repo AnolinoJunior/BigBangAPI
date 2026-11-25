@@ -7,19 +7,19 @@ namespace BigBangAPI.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [StringLength(45, ErrorMessage = "Name cannot be longer than 45 characters.")]
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        [StringLength(45, ErrorMessage = "O nome não pode ter mais de 45 caracteres.")]
         [PrimeiraLetraMaiuscula]
         public string Name { get; set; } = string.Empty;
-        [Required]
-        [StringLength(45, ErrorMessage = "Actor name cannot be longer than 45 characters.")]
+        [Required(ErrorMessage = "O nome do ator é obrigatório.")]
+        [StringLength(45, ErrorMessage = "O nome do ator não pode ter mais de 45 caracteres.")]
         public string Actor { get; set; } = string.Empty;
-        [Required]
+        [Required(ErrorMessage = "A ocupação é obrigatória.")]
         [StringLength(45,MinimumLength = 10, 
-            ErrorMessage = "Occupation must be between 10 and 45 characters.")]
+            ErrorMessage = "A ocupação deve ter entre 10 e 45 caracteres.")]
         public string Occupation { get; set; } = string.Empty;
-        [Required]
-        [StringLength(45, ErrorMessage = "University cannot be longer than 45 characters.")]
+        [Required(ErrorMessage = "O nome da universidade é obrigatório.")]
+        [StringLength(45, ErrorMessage = "O nome da universidade não pode ter mais de 45 caracteres.")]
         public string University { get; set; } = string.Empty;
         public int IQ { get; set; }
 

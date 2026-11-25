@@ -56,7 +56,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = "No episodes found."
+                    Message = "Nenhum episódio foi encontrado."
                 });
             }
 
@@ -74,7 +74,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"Episódio com identificador {id} não encontrado."
                 });
             }
 
@@ -100,7 +100,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"Episódio com identificador {id} não encontrado."
                 });
             }
 
@@ -125,7 +125,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"Episode with ID {id} was not found."
+                    Message = $"Episódio com identificador {id} não encontrado."
                 });
             }
 
@@ -147,7 +147,7 @@ namespace BigBangAPI.Controllers
             {
                 return NotFound(new
                 {
-                    Message = $"No characters were found for episode {id}."
+                    Message = $"Nenhum personagem foi encontrado para o episódio {id}."
                 });
             }
 

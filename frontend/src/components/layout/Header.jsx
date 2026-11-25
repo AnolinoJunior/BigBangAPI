@@ -3,10 +3,10 @@ import useAuth from '../../hooks/useAuth'
 import styles from './Header.module.css'
 
 const navigationItems = [
-  { label: 'Home', to: '/' },
-  { label: 'Characters', to: '/characters' },
-  { label: 'Episodes', to: '/episodes' },
-  { label: 'Locations', to: '/locations' },
+  { label: 'Início', to: '/' },
+  { label: 'Personagens', to: '/characters' },
+  { label: 'Episódios', to: '/episodes' },
+  { label: 'Localizações', to: '/locations' },
 ]
 
 function Header() {
@@ -47,7 +47,7 @@ function Header() {
                   }
                   to="/login"
                 >
-                  Login
+                  Entrar
                 </NavLink>
               </li>
             )}
@@ -59,14 +59,14 @@ function Header() {
                   }
                   to="/admin"
                 >
-                  Painel Admin
+                  Painel administrativo
                 </NavLink>
               </li>
             )}
             {isAuthenticated && (
               <li>
                 <button className={`${styles.link} ${styles.logout}`} onClick={handleLogout} type="button">
-                  Logout
+                  Sair
                 </button>
               </li>
             )}

@@ -6,10 +6,10 @@
     {
         public class Location
         {
-            [Required]
+            [Required(ErrorMessage = "O identificador é obrigatório.")]
             [Key]
             public int Id { get; set; }
-            [StringLength(45, ErrorMessage = "Name cannot be longer than 45 characters.")]
+            [StringLength(45, ErrorMessage = "O nome não pode ter mais de 45 caracteres.")]
             public string?  Name { get; set; }
 
             [JsonIgnore]

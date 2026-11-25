@@ -24,7 +24,7 @@ public static class ApiExceptionMiddlewareExtensions
                     await context.Response.WriteAsync(new ErrorDetails()
                     {
                         StatusCode = context.Response.StatusCode,
-                        Message = contextFeature.Error.Message,
+                        Message = "Ocorreu um erro inesperado ao processar a solicitação.",
                         Trace = contextFeature.Error.StackTrace
                     }.ToString());
                 }

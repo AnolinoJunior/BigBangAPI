@@ -59,7 +59,7 @@ function AdminCharactersPage() {
           setCharacters([])
           setPagination(null)
         } else {
-          setErrorMessage(getApiMessage(error, 'Não foi possível carregar os characters.'))
+          setErrorMessage(getApiMessage(error, 'Não foi possível carregar os personagens.'))
         }
       } finally {
         if (!ignoreResponse) setIsLoading(false)
@@ -106,17 +106,17 @@ function AdminCharactersPage() {
 
       if (formCharacter) {
         await updateCharacter(formCharacter.id, characterToSave)
-        setSuccessMessage('Character atualizado com sucesso.')
+        setSuccessMessage('Personagem atualizado com sucesso.')
       } else {
         await createCharacter(characterToSave)
-        setSuccessMessage('Character criado com sucesso.')
+        setSuccessMessage('Personagem criado com sucesso.')
       }
 
       setIsFormOpen(false)
       setFormCharacter(null)
       setReloadKey((key) => key + 1)
     } catch (error) {
-      setFormError(getApiMessage(error, 'Não foi possível salvar o character.'))
+      setFormError(getApiMessage(error, 'Não foi possível salvar o personagem.'))
     } finally {
       setIsUploading(false)
       setIsSaving(false)
@@ -131,7 +131,7 @@ function AdminCharactersPage() {
 
     try {
       await deleteCharacter(characterToDelete.id)
-      setSuccessMessage('Character excluído com sucesso.')
+      setSuccessMessage('Personagem excluído com sucesso.')
       setCharacterToDelete(null)
 
       if (characters.length === 1 && currentPage > 1) {
@@ -140,7 +140,7 @@ function AdminCharactersPage() {
         setReloadKey((key) => key + 1)
       }
     } catch (error) {
-      setErrorMessage(getApiMessage(error, 'Não foi possível excluir o character.'))
+      setErrorMessage(getApiMessage(error, 'Não foi possível excluir o personagem.'))
       setCharacterToDelete(null)
     } finally {
       setIsDeleting(false)
@@ -151,21 +151,21 @@ function AdminCharactersPage() {
     <section>
       <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-          <h1 className="h3 mb-1">Characters Administration</h1>
-          <p className="text-body-secondary mb-0">Gerencie os characters cadastrados na API.</p>
+          <h1 className="h3 mb-1">Administração de personagens</h1>
+          <p className="text-body-secondary mb-0">Gerencie os personagens cadastrados na API.</p>
         </div>
         <button className="btn btn-primary" disabled={isLoadingForm} onClick={() => openForm()} type="button">
-          {isLoadingForm ? 'Carregando...' : 'Novo Character'}
+          {isLoadingForm ? 'Carregando...' : 'Novo personagem'}
         </button>
       </div>
 
       {successMessage && <div className="alert alert-success" role="status">{successMessage}</div>}
       {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
 
-      {isLoading && <div className="text-center py-5"><div aria-label="Carregando characters" className="spinner-border" role="status" /></div>}
+      {isLoading && <div className="text-center py-5"><div aria-label="Carregando personagens" className="spinner-border" role="status" /></div>}
 
       {!isLoading && !errorMessage && characters.length === 0 && (
-        <div className="alert alert-info mb-0">Nenhum character foi encontrado.</div>
+        <div className="alert alert-info mb-0">Nenhum personagem foi encontrado.</div>
       )}
 
       {!isLoading && characters.length > 0 && (
@@ -216,7 +216,7 @@ function AdminCharactersPage() {
       )}
 
       {isFormOpen && <CharacterFormModal character={formCharacter} errorMessage={formError} isSaving={isSaving} isUploading={isUploading} locations={locations} onCancel={() => setIsFormOpen(false)} onSave={handleSave} />}
-      {characterToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${characterToDelete.name}? Esta ação não pode ser desfeita.`} onCancel={() => setCharacterToDelete(null)} onConfirm={handleDelete} title="Excluir Character" />}
+      {characterToDelete && <ConfirmModal isSubmitting={isDeleting} message={`Deseja excluir ${characterToDelete.name}? Esta ação não pode ser desfeita.`} onCancel={() => setCharacterToDelete(null)} onConfirm={handleDelete} title="Excluir personagem" />}
     </section>
   )
 }
