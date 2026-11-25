@@ -24,11 +24,22 @@ var database = configuration["SqlServer:Database"];
 var trustedConnection = configuration["SqlServer:TrustedConnection"];
 var trustServerCertificate = configuration["SqlServer:TrustServerCertificate"];
 
-var connectionString = configuration.GetConnectionString("DefaultConnection")
-    ?? ($"Server={server};" +
+var connectionString = configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    if (!builder.Environment.IsDevelopment() ||
+        string.IsNullOrWhiteSpace(server) ||
+        string.IsNullOrWhiteSpace(database))
+    {
+        throw new InvalidOperationException(
+            "Connection string DefaultConnection was not configured.");
+    }
+
+    connectionString = $"Server={server};" +
         $"Database={database};" +
         $"Trusted_Connection={trustedConnection};" +
-        $"TrustServerCertificate={trustServerCertificate};");
+        $"TrustServerCertificate={trustServerCertificate};";
+}
 
 #endregion
 
@@ -208,9 +219,15 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
+    var allowedOrigins = (configuration["Cors:AllowedOrigins"] ?? string.Empty)
+        .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .Prepend("http://localhost:5173")
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+
     options.AddPolicy("ReactPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .WithExposedHeaders("X-Pagination");
@@ -228,8 +245,6 @@ app.ConfigureExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseCors("ReactPolicy");
@@ -240,8 +255,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallbackToFile("index.html");
-
 #endregion
 
-app.Run();  
+app.Run();
