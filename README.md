@@ -1,183 +1,229 @@
-# 🚀 API de The Big Bang Theory
+# 🚀 BigBangAPI — The Big Bang Theory
 
-![.NET](https://img.shields.io/badge/.NET-8-512BD4?logo=.net)
+![.NET](https://img.shields.io/badge/.NET-8-512BD4?logo=dotnet)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoftsqlserver)
 ![Entity Framework Core](https://img.shields.io/badge/Entity%20Framework-Core-512BD4)
+![JWT](https://img.shields.io/badge/Authentication-JWT-black?logo=jsonwebtokens)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger)
 ![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-success)
 
-Uma **API REST** desenvolvida com **ASP.NET Core (.NET 8)**, inspirada no universo da série **The Big Bang Theory** e acompanhada por uma aplicação web em React.
+Uma **API REST** desenvolvida com **ASP.NET Core (.NET 8)**, inspirada no universo da série *The Big Bang Theory*, acompanhada por uma aplicação web desenvolvida em React.
 
-O projeto foi desenvolvido com foco em boas práticas de arquitetura, organização em camadas e conceitos utilizados no desenvolvimento de aplicações modernas.
+O projeto reúne uma API para gerenciamento de personagens, episódios e localizações, além de uma plataforma administrativa que permite gerenciar essas informações por meio de uma interface web.
+
+O desenvolvimento tem como foco a aplicação prática de conceitos de desenvolvimento backend, frontend, persistência de dados, segurança e organização de aplicações.
+
 ## ⚠️ Aviso
 
-Este projeto foi desenvolvido exclusivamente para fins de estudo e demonstração de conhecimentos em ASP.NET Core, Entity Framework Core e desenvolvimento de APIs REST.
+Este projeto foi desenvolvido exclusivamente para fins de estudo e demonstração de conhecimentos em desenvolvimento de software.
 
-A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem aos seus respectivos detentores de direitos autorais. Este projeto não possui qualquer vínculo oficial com a Warner Bros. ou seus proprietários e não tem finalidade comercial.
+A franquia **The Big Bang Theory**, seus personagens, nomes e imagens pertencem aos respectivos detentores de direitos autorais. Este projeto não possui vínculo oficial com a Warner Bros. ou seus proprietários e não tem finalidade comercial.
+
 ---
 
 # 🌐 Demonstração
 
 | Aplicação | Endereço |
-|------------|------|
-| API | https://bigbangapi.somee.com |
-| Swagger | https://bigbangapi.somee.com/swagger |
-| Documentação | https://bigbangapi.somee.com/docs |
+|---|---|
+| Aplicação web | https://bigbangapi-1.onrender.com/ |
+| Área administrativa | https://bigbangapi-1.onrender.com/admin |
+| Swagger / OpenAPI | https://bigbangapi-1.onrender.com/swagger/index.html |
+| Repositório | https://github.com/AnolinoJunior/BigBangAPI |
 
 ---
 
-# 📸 Prévia
+# 📸 Prévia da aplicação
 
-## Interface web
+## Interface administrativa
 
-<img width="745" height="638" alt="Captura de tela da interface web" src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" />
+A plataforma administrativa permite gerenciar os dados da aplicação sem precisar realizar operações diretamente pelo Swagger.
 
+### Painel administrativo
 
-## Swagger
+<img src="https://github.com/user-attachments/assets/312eec1b-a270-4e66-a079-342955943fa5" alt="Interface da aplicação BigBangAPI" width="745" />
 
-<img width="911" height="652" alt="Captura de tela do Swagger" src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" />
+### Gerenciamento de personagens
 
+O administrador pode cadastrar e editar personagens, preencher suas informações e enviar imagens diretamente pela interface.
+
+<!-- Adicione aqui a captura de tela do formulário de cadastro de personagens. -->
+
+### Swagger
+
+<img src="https://github.com/user-attachments/assets/239caea8-095f-4429-909d-fc17394b6174" alt="Documentação Swagger da BigBangAPI" width="911" />
 
 ---
 
 # ✨ Funcionalidades
 
-### 👥 Personagens
+## 👥 Gerenciamento de personagens
 
-- CRUD completo
-- Consulta por identificador
-- Paginação
-- Imagens dinâmicas
-- Página de detalhes
+- Cadastro de personagens.
+- Consulta por identificador.
+- Edição e exclusão.
+- Paginação.
+- Envio de imagens.
+- Exibição de imagens dos personagens.
+- Página de detalhes.
 
-### 📺 Episódios
+## 📺 Gerenciamento de episódios
 
-- CRUD completo
+- Cadastro de episódios.
+- Consulta e gerenciamento.
+- Edição e exclusão.
 
-### 📍 Localizações
+## 📍 Gerenciamento de localizações
 
-- CRUD completo
+- Cadastro de localizações.
+- Consulta e gerenciamento.
+- Edição e exclusão.
 
-### ⚙ Recursos
+## 🔐 Autenticação e autorização
 
-- DTOs (objetos de transferência de dados)
-- AutoMapper
-- Paginação
-- JSON Patch
-- Middleware
-- Filtros de ação
-- Filtros de exceção
-- Registro personalizado de eventos
-- Servir arquivos estáticos (`wwwroot`)
-- Swagger / OpenAPI
-- Carga inicial de dados
+- ASP.NET Core Identity.
+- Autenticação baseada em JWT.
+- Geração de Access Token e Refresh Token.
+- Controle de acesso baseado em funções (Roles).
+- Política de autorização para administradores (`AdminOnly`).
+- Proteção de endpoints administrativos.
+- Provisionamento explícito do primeiro administrador em produção.
+
+## 🖥 Plataforma administrativa
+
+A aplicação web possui uma área administrativa integrada ao backend, permitindo:
+
+- Acesso autenticado ao painel.
+- Gerenciamento de personagens, episódios e localizações.
+- Cadastro e edição de informações.
+- Envio de imagens durante o gerenciamento de personagens.
+- Exclusão de registros.
+- Integração com os endpoints protegidos da API.
 
 ---
 
 # 🏗 Arquitetura
 
+A aplicação utiliza React no frontend para consumir os recursos disponibilizados pela ASP.NET Core Web API.
+
 ```text
-                React + Vite
-                      │
-                 Axios (HTTP)
-                      │
-                      ▼
-            ASP.NET Core Web API
-                      │
-         ┌────────────┴────────────┐
-         ▼                         ▼
- Padrão Repository         Middleware
-         │
-         ▼
-     Unidade de trabalho
-         │
-         ▼
- Entity Framework Core
-         │
-         ▼
+                  React + Vite
+                       │
+                  Axios (HTTP)
+                       │
+                       ▼
+             ASP.NET Core Web API
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+      Controllers  Middleware   ASP.NET Identity
+          │            │            │
+          ▼            ▼            ▼
+      Repositories  Filters     JWT / Roles
+          │
+          ▼
+    Unidade de Trabalho
+          │
+          ▼
+  Entity Framework Core
+          │
+          ▼
       SQL Server
 ```
 
 ---
 
-# 🛠 Tecnologias
+# 🛠 Tecnologias utilizadas
 
-## Servidor
+## Backend
 
-- ASP.NET Core 8
 - C#
+- ASP.NET Core 8
 - Entity Framework Core
 - SQL Server
+- ASP.NET Core Identity
+- JWT Bearer Authentication
 - AutoMapper
 - Swagger / OpenAPI
 - JSON Patch
 
-## Aplicação web
+## Frontend
 
-- React
+- React 19
 - Vite
 - React Router
 - Axios
 - CSS Modules
 
-## Ferramentas
+## Ferramentas e infraestrutura
 
 - Git
 - GitHub
 - Visual Studio
-- VS Code
-- Hospedagem Somee
+- Visual Studio Code
+- Render
 
 ---
 
 # 📚 Conceitos aplicados
 
-### Arquitetura
+### Arquitetura e organização
 
-- API REST
-- Padrão de repositório
-- Repositório genérico
-- Unidade de trabalho
-- Injeção de dependência
+- API REST.
+- Arquitetura em camadas.
+- Padrão Repository.
+- Repositório genérico.
+- Unidade de Trabalho (Unit of Work).
+- Injeção de dependência.
 
-### Persistência
+### Persistência de dados
 
-- Entity Framework Core
-- LINQ
-- SQL Server
-- Relacionamentos um para muitos (1:N)
-- Relacionamentos muitos para muitos (N:N)
+- Entity Framework Core.
+- LINQ.
+- SQL Server.
+- Migrations.
+- Relacionamentos um para muitos (1:N).
+- Relacionamentos muitos para muitos (N:N).
 
-### API
+### Desenvolvimento de APIs
 
-- Padrão DTO
-- AutoMapper
-- Paginação
-- JSON Patch
-- Swagger / OpenAPI
+- DTOs (Data Transfer Objects).
+- AutoMapper.
+- Paginação.
+- JSON Patch.
+- Swagger / OpenAPI.
 
-### Pipeline
+### Segurança
 
-- Middleware
-- Action Filters
-- Exception Filters
-- Tratamento Global de Exceções
+- ASP.NET Core Identity.
+- Autenticação JWT.
+- Access Token e Refresh Token.
+- Autorização baseada em Roles.
+- Políticas de autorização.
+- Proteção de endpoints administrativos.
+
+### Pipeline e tratamento de requisições
+
+- Middleware.
+- Action Filters.
+- Exception Filters.
+- Tratamento global de exceções.
 
 ### Registro de eventos
 
-- ILogger
-- Provedor de registro personalizado
-- Registros em arquivo
+- ILogger.
+- Provedor de logging personalizado.
+- Registros em arquivo.
 
-### Aplicação web
+### Desenvolvimento frontend
 
-- React
-- Axios
-- React Router
-- CSS Modules
-- Consumo de APIs REST
+- React.
+- Axios.
+- React Router.
+- CSS Modules.
+- Consumo de APIs REST.
+- Integração com endpoints autenticados.
 
 ---
 
@@ -198,6 +244,7 @@ Projeto-BigBangAPI
 │   ├── Pagination
 │   ├── Properties
 │   ├── Repositories
+│   ├── Services
 │   ├── Validations
 │   ├── wwwroot
 │   │   └── Images
@@ -224,9 +271,9 @@ Projeto-BigBangAPI
 
 ---
 
-# ⚙ Como executar
+# ⚙ Como executar localmente
 
-## Servidor
+## Backend
 
 Clone o repositório:
 
@@ -234,7 +281,7 @@ Clone o repositório:
 git clone https://github.com/AnolinoJunior/BigBangAPI.git
 ```
 
-Entre na pasta:
+Entre na pasta do backend:
 
 ```bash
 cd BigBangAPI/BigBangAPI
@@ -246,7 +293,9 @@ Restaure as dependências:
 dotnet restore
 ```
 
-Para atualizar manualmente o banco de desenvolvimento, execute as migrations:
+Configure a connection string do SQL Server e as demais configurações necessárias no ambiente local.
+
+Para aplicar as migrations no banco de desenvolvimento:
 
 ```bash
 dotnet ef database update
@@ -258,11 +307,7 @@ Inicie a API:
 dotnet run
 ```
 
-A API estará disponível em:
-
-```text
-http://localhost:5004
-```
+A API estará disponível na URL indicada pelo terminal.
 
 Swagger:
 
@@ -270,9 +315,7 @@ Swagger:
 http://localhost:5004/swagger
 ```
 
----
-
-## Aplicação web
+## Frontend
 
 Entre na pasta:
 
@@ -286,19 +329,19 @@ Instale as dependências:
 npm install
 ```
 
-Crie um arquivo `.env` baseado no exemplo:
+Crie um arquivo `.env` baseado no `.env.example`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:5004/api
 ```
 
-Execute:
+Execute a aplicação:
 
 ```bash
 npm run dev
 ```
 
-Aplicação web:
+Frontend:
 
 ```text
 http://localhost:5173
@@ -306,35 +349,16 @@ http://localhost:5173
 
 ---
 
-# 🎯 Objetivos
-
-Este projeto foi desenvolvido para praticar:
-
-- Desenvolvimento de APIs REST
-- Entity Framework Core
-- Arquitetura em Camadas
-- Padrão de repositório
-- Unidade de trabalho
-- AutoMapper
-- React consumindo APIs
-- Organização de código
-- Boas práticas de desenvolvimento
-- Publicação em ambiente real
-
----
-
 # 🚀 Próximas melhorias
 
-- Autenticação JWT
-- Token de atualização
-- Versionamento da API
-- FluentValidation
-- Docker
-- Redis Cache
-- Testes unitários
-- Testes de integração
-- Verificações de disponibilidade
-- CI/CD com GitHub Actions
+- Versionamento da API.
+- FluentValidation.
+- Docker.
+- Redis Cache.
+- Testes unitários.
+- Testes de integração.
+- Monitoramento e observabilidade.
+- Ampliação da automação CI/CD com GitHub Actions.
 
 ---
 
