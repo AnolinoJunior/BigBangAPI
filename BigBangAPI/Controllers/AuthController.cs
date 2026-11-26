@@ -200,6 +200,7 @@ namespace BigBangAPI.Controllers
 
         #region Register
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {

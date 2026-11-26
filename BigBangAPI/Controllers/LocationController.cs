@@ -122,6 +122,15 @@ namespace BigBangAPI.Controllers
                 });
             }
 
+            var relatedCharacters = await _uof.LocationRepository.GetCharactersByLocationAsync(id);
+            if (relatedCharacters.Any())
+            {
+                return Conflict(new
+                {
+                    Message = "Não é possível excluir esta localização porque há personagens associados a ela."
+                });
+            }
+
             _uof.LocationRepository.Delete(location);
 
             await _uof.CommitAsync();

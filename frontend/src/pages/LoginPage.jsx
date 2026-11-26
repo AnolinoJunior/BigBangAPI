@@ -33,7 +33,7 @@ function LoginPage() {
         <div className="col-12 col-sm-10 col-md-7 col-lg-5">
           <section className="card shadow-sm" aria-labelledby="login-title">
             <div className="card-body p-4 p-md-5">
-              <h1 className="h3 mb-4" id="login-title">Entrar</h1>
+              <h1 className="h3 mb-4" id="login-title">Acesso administrativo</h1>
 
               {errorMessage && (
                 <div className="alert alert-danger" role="alert">
