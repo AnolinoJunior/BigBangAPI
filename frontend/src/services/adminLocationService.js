@@ -10,6 +10,11 @@ export async function getLocationById(id) {
   return response.data
 }
 
+export async function getCharactersByLocation(id) {
+  const response = await api.get(`/Location/${id}/characters`)
+  return response.data
+}
+
 export async function createLocation(location) {
   const response = await api.post('/Location', location)
   return response.data

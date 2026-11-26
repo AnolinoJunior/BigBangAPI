@@ -9,7 +9,7 @@ import CharacterDetailsPage from '../pages/CharacterDetailsPage'
 import CharactersPage from '../pages/CharactersPage'
 import HomePage from '../pages/HomePage'
 import LoginPage from '../pages/LoginPage'
-import ResourcePlaceholderPage from '../pages/ResourcePlaceholderPage'
+import LocationsPage from '../pages/LocationsPage'
 import SeasonEpisodesPage from '../pages/SeasonEpisodesPage'
 import SeasonsPage from '../pages/SeasonsPage'
 import AdminRoute from './AdminRoute'
@@ -35,10 +35,7 @@ function AppRoutes() {
         <Route path="characters/:characterId" element={<CharacterDetailsPage />} />
         <Route path="episodes" element={<SeasonsPage />} />
         <Route path="episodes/season/:seasonNumber" element={<SeasonEpisodesPage />} />
-        <Route
-          path="locations"
-          element={<ResourcePlaceholderPage resourceName="Localizações" />}
-        />
+        <Route path="locations" element={<LocationsPage />} />
         <Route path="*" element={<HomePage />} />
       </Route>
     </Routes>

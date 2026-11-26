@@ -47,7 +47,7 @@ function Header() {
                   }
                   to="/login"
                 >
-                  Entrar
+                  Admin
                 </NavLink>
               </li>
             )}
