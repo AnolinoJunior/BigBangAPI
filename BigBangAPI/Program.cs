@@ -13,7 +13,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+const string provisionAdminArgument = "--provision-admin";
+var shouldProvisionAdmin = args.Contains(provisionAdminArgument, StringComparer.Ordinal);
+var builderArguments = args
+    .Where(argument => !string.Equals(argument, provisionAdminArgument, StringComparison.Ordinal))
+    .ToArray();
+
+var builder = WebApplication.CreateBuilder(builderArguments);
 
 var configuration = builder.Configuration;
 
@@ -238,6 +244,54 @@ builder.Services.AddCors(options =>
 #endregion
 
 var app = builder.Build();
+
+if (shouldProvisionAdmin)
+{
+    try
+    {
+        if (!app.Environment.IsProduction())
+        {
+            throw new InvalidOperationException(
+                "O provisionamento do administrador só pode ser executado no ambiente Production.");
+        }
+
+        var adminUserName = configuration["AdminProvisioning:UserName"];
+        var adminEmail = configuration["AdminProvisioning:Email"];
+        var adminPassword = configuration["AdminProvisioning:Password"];
+
+        if (string.IsNullOrWhiteSpace(adminUserName) ||
+            string.IsNullOrWhiteSpace(adminEmail) ||
+            string.IsNullOrEmpty(adminPassword))
+        {
+            throw new InvalidOperationException(
+                "Configure AdminProvisioning:UserName, AdminProvisioning:Email e AdminProvisioning:Password para executar o provisionamento.");
+        }
+
+        using var scope = app.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<ApplicationUser>>();
+
+        var result = await AdminAccountProvisioner.ProvisionAsync(
+            userManager,
+            roleManager,
+            passwordHasher,
+            adminUserName,
+            adminEmail,
+            adminPassword);
+
+        Console.WriteLine(
+            $"Provisionamento concluído: role Admin {(result.RoleCreated ? "criada" : "já existente")}; " +
+            $"usuário {(result.UserCreated ? "criado" : "já existente")}; " +
+            $"associação {(result.RoleAssignmentCreated ? "criada" : "já existente")}. ");
+    }
+    finally
+    {
+        await app.DisposeAsync();
+    }
+
+    return;
+}
 
 #region Pipeline
 
